@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dXGpMuUOq+k=",
+  "dgSpecHash": "il7Erf16qB0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Stephanie Gomes\\Desktop\\Stephanie\\Estudos\\C#\\Projetos\\api-gym-ai\\api-gym-ai.csproj",
+  "projectFilePath": "C:\\Users\\Stephanie Gomes\\Desktop\\Stephanie\\Estudos\\C#\\Projetos\\api-gym-ai\\api-gym-ai\\api-gym-ai.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Stephanie Gomes\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\Stephanie Gomes\\.nuget\\packages\\microsoft.openapi\\1.6.14\\microsoft.openapi.1.6.14.nupkg.sha512",

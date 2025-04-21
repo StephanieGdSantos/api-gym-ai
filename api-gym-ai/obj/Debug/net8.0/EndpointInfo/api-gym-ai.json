@@ -5,26 +5,26 @@
     "version": "1.0"
   },
   "paths": {
-    "/PersonalTrainer": {
+    "/Exercicio": {
       "post": {
         "tags": [
-          "PersonalTrainer"
+          "Exercicio"
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/InformacoesCorporais"
+                "$ref": "#/components/schemas/Usuario"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/InformacoesCorporais"
+                "$ref": "#/components/schemas/Usuario"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/InformacoesCorporais"
+                "$ref": "#/components/schemas/Usuario"
               }
             }
           }
@@ -61,56 +61,11 @@
           }
         }
       }
-    },
-    "/WeatherForecast": {
-      "get": {
-        "tags": [
-          "WeatherForecast"
-        ],
-        "operationId": "GetWeatherForecast",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
     "schemas": {
       "Exercicio": {
-        "required": [
-          "musculoAlvo",
-          "nome",
-          "repeticoes",
-          "series"
-        ],
         "type": "object",
         "properties": {
           "nome": {
@@ -135,38 +90,27 @@
         },
         "additionalProperties": false
       },
-      "InformacoesCorporais": {
-        "required": [
-          "altura",
-          "idade",
-          "limitacoes",
-          "objetivo",
-          "partesDoCorpoEmFoco",
-          "peso",
-          "tempoDeTreino"
-        ],
+      "InfoCorporais": {
         "type": "object",
         "properties": {
           "idade": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "nullable": true
           },
           "altura": {
-            "type": "number",
-            "format": "double"
+            "type": "string",
+            "nullable": true
           },
           "peso": {
-            "type": "number",
-            "format": "double"
+            "type": "string",
+            "nullable": true
           },
           "percentualGordura": {
-            "type": "number",
-            "format": "double",
+            "type": "string",
             "nullable": true
           },
           "massaMuscular": {
-            "type": "number",
-            "format": "double",
+            "type": "string",
             "nullable": true
           },
           "sexo": {
@@ -179,7 +123,13 @@
               "type": "string"
             },
             "nullable": true
-          },
+          }
+        },
+        "additionalProperties": false
+      },
+      "InfoObjetivo": {
+        "type": "object",
+        "properties": {
           "objetivo": {
             "type": "string",
             "nullable": true
@@ -192,31 +142,24 @@
             "nullable": true
           },
           "tempoDeTreino": {
-            "type": "number",
-            "format": "double"
+            "type": "string",
+            "nullable": true
+          },
+          "variacaoTreino": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "WeatherForecast": {
+      "Usuario": {
         "type": "object",
         "properties": {
-          "date": {
-            "type": "string",
-            "format": "date"
+          "infoCorporais": {
+            "$ref": "#/components/schemas/InfoCorporais"
           },
-          "temperatureC": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "temperatureF": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
-          },
-          "summary": {
-            "type": "string",
-            "nullable": true
+          "objetivo": {
+            "$ref": "#/components/schemas/InfoObjetivo"
           }
         },
         "additionalProperties": false

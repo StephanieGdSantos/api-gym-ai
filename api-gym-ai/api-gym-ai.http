@@ -1,0 +1,6 @@
+@api_gym_ai_HostAddress = http://localhost:5255
+
+GET {{api_gym_ai_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

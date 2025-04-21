@@ -1,0 +1,113 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Stephanie Gomes\\Desktop\\Stephanie\\Estudos\\C#\\Projetos\\api-gym-ai\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C2FC56F5-AD5C-41B1-89B4-3EEB064A5429}|api-gym-ai.csproj|c:\\users\\stephanie gomes\\desktop\\stephanie\\estudos\\c#\\projetos\\api-gym-ai\\controllers\\personaltrainercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C2FC56F5-AD5C-41B1-89B4-3EEB064A5429}|api-gym-ai.csproj|solutionrelative:controllers\\personaltrainercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C2FC56F5-AD5C-41B1-89B4-3EEB064A5429}|api-gym-ai.csproj|c:\\users\\stephanie gomes\\desktop\\stephanie\\estudos\\c#\\projetos\\api-gym-ai\\models\\exercicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C2FC56F5-AD5C-41B1-89B4-3EEB064A5429}|api-gym-ai.csproj|solutionrelative:models\\exercicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C2FC56F5-AD5C-41B1-89B4-3EEB064A5429}|api-gym-ai.csproj|c:\\users\\stephanie gomes\\desktop\\stephanie\\estudos\\c#\\projetos\\api-gym-ai\\models\\informacoescorporais.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C2FC56F5-AD5C-41B1-89B4-3EEB064A5429}|api-gym-ai.csproj|solutionrelative:models\\informacoescorporais.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C2FC56F5-AD5C-41B1-89B4-3EEB064A5429}|api-gym-ai.csproj|c:\\users\\stephanie gomes\\desktop\\stephanie\\estudos\\c#\\projetos\\api-gym-ai\\services\\cohereservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C2FC56F5-AD5C-41B1-89B4-3EEB064A5429}|api-gym-ai.csproj|solutionrelative:services\\cohereservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C2FC56F5-AD5C-41B1-89B4-3EEB064A5429}|api-gym-ai.csproj|c:\\users\\stephanie gomes\\desktop\\stephanie\\estudos\\c#\\projetos\\api-gym-ai\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C2FC56F5-AD5C-41B1-89B4-3EEB064A5429}|api-gym-ai.csproj|solutionrelative:controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CohereService.cs",
+              "DocumentMoniker": "C:\\Users\\Stephanie Gomes\\Desktop\\Stephanie\\Estudos\\C#\\Projetos\\api-gym-ai\\Services\\CohereService.cs",
+              "RelativeDocumentMoniker": "Services\\CohereService.cs",
+              "ToolTip": "C:\\Users\\Stephanie Gomes\\Desktop\\Stephanie\\Estudos\\C#\\Projetos\\api-gym-ai\\Services\\CohereService.cs",
+              "RelativeToolTip": "Services\\CohereService.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAQwBwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-21T02:04:20.516Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "InformacoesCorporais.cs",
+              "DocumentMoniker": "C:\\Users\\Stephanie Gomes\\Desktop\\Stephanie\\Estudos\\C#\\Projetos\\api-gym-ai\\Models\\InformacoesCorporais.cs",
+              "RelativeDocumentMoniker": "Models\\InformacoesCorporais.cs",
+              "ToolTip": "C:\\Users\\Stephanie Gomes\\Desktop\\Stephanie\\Estudos\\C#\\Projetos\\api-gym-ai\\Models\\InformacoesCorporais.cs",
+              "RelativeToolTip": "Models\\InformacoesCorporais.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-21T01:59:59.602Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Exercicio.cs",
+              "DocumentMoniker": "C:\\Users\\Stephanie Gomes\\Desktop\\Stephanie\\Estudos\\C#\\Projetos\\api-gym-ai\\Models\\Exercicio.cs",
+              "RelativeDocumentMoniker": "Models\\Exercicio.cs",
+              "ToolTip": "C:\\Users\\Stephanie Gomes\\Desktop\\Stephanie\\Estudos\\C#\\Projetos\\api-gym-ai\\Models\\Exercicio.cs",
+              "RelativeToolTip": "Models\\Exercicio.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-21T01:59:39.419Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PersonalTrainerController.cs",
+              "DocumentMoniker": "C:\\Users\\Stephanie Gomes\\Desktop\\Stephanie\\Estudos\\C#\\Projetos\\api-gym-ai\\Controllers\\PersonalTrainerController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PersonalTrainerController.cs",
+              "ToolTip": "C:\\Users\\Stephanie Gomes\\Desktop\\Stephanie\\Estudos\\C#\\Projetos\\api-gym-ai\\Controllers\\PersonalTrainerController.cs",
+              "RelativeToolTip": "Controllers\\PersonalTrainerController.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAIA/wBYAAACsAQAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-21T01:55:26.083Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "WeatherForecastController.cs",
+              "DocumentMoniker": "C:\\Users\\Stephanie Gomes\\Desktop\\Stephanie\\Estudos\\C#\\Projetos\\api-gym-ai\\Controllers\\WeatherForecastController.cs",
+              "RelativeDocumentMoniker": "Controllers\\WeatherForecastController.cs",
+              "ToolTip": "C:\\Users\\Stephanie Gomes\\Desktop\\Stephanie\\Estudos\\C#\\Projetos\\api-gym-ai\\Controllers\\WeatherForecastController.cs",
+              "RelativeToolTip": "Controllers\\WeatherForecastController.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-21T01:55:05.028Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

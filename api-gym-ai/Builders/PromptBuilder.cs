@@ -81,12 +81,13 @@ namespace api_gym_ai.Builders
 
         public Prompt Build()
         {
-            var promptFinal = new Prompt();
-            _basePrompt = _basePrompt
-                .Replace("[informações]", _informacoes)
-                .Substring(0, _basePrompt.Length - 2);
+            _informacoes = _informacoes.TrimEnd(',', ' ');
 
-            promptFinal.Mensagem = _basePrompt;
+            Prompt promptFinal = new()
+            {
+                Mensagem = _basePrompt
+                .Replace("[informações]", _informacoes)
+            };
 
             return promptFinal;
         }

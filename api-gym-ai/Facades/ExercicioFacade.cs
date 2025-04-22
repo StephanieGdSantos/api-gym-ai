@@ -23,7 +23,13 @@ namespace api_gym_ai.Facades
                     var repeticoes = numeroRepeticoes[1].Trim();
                     var musculosAlvo = partes[2].Trim().Split(" ");
 
-                    var novoExercicio = new ExercicioBuilder().ComNome(nomeExercicio).ComSeries(series).ComRepeticoes(repeticoes).ComMusculosAlvo(musculosAlvo).Build();
+                    var novoExercicio = new ExercicioBuilder()
+                        .ComNome(nomeExercicio)
+                        .ComSeries(series)
+                        .ComRepeticoes(repeticoes)
+                        .ComMusculosAlvo(musculosAlvo)
+                        .Build();
+
                     listaExercicios.Add(novoExercicio);
                 }
             }

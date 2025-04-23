@@ -5,19 +5,21 @@ namespace api_gym_ai.Builders
 {
     public class PromptBuilder : IPromptBuilder
     {
-        private string _basePrompt { get; set; } = "Haja como um personal trainer e considere as seguintes informações: [informações]. A partir dessas informações recomende um plano de exercícios para fazer na academia. me responda utilizando especificamente o formato '[exercício 1], [séries]x[repetições], [músculo(s) alvo separados por espaço]\n [exercício 2], [séries]x[repetições], [músculo(s) alvo separados por espaço]', onde os itens com chaves são mascaras para serem preenchidas; exclua as chaves do texto.não quero mais informações além das pedidas. a mensagem retornada devem seguir exatamente o modelo passado";
+        private string _basePrompt { get; set; } = "Haja como um personal trainer e considere as seguintes informações: [informações]. A partir dessas informações recomende um plano de exercícios para fazer na academia. me responda utilizando especificamente o formato 'TREINO A: [exercício 1], [séries]x[repetições], [músculo(s) alvo separados por espaço]\n [exercício 2], [séries]x[repetições], [músculo(s) alvo separados por espaço] - Músculos trabalhados: [músculo 1, músculo 2] - TREINO B...', onde os itens com chaves são mascaras para serem preenchidas; exclua as chaves do texto.não quero mais informações além das pedidas. a mensagem retornada devem seguir exatamente o modelo passado";
 
         private string _informacoes { get; set; } = string.Empty;
 
         public IPromptBuilder ComAltura(string altura)
         {
             _informacoes += $"Altura: {altura}, ";
+
             return this;
         }
 
         public IPromptBuilder ComIdade(string idade)
         {
             _informacoes += $"Idade: {idade}, ";
+
             return this;
         }
 
@@ -25,6 +27,7 @@ namespace api_gym_ai.Builders
         {
             if (!string.IsNullOrEmpty(limitacoes))
                 _informacoes += $"Limitações: {limitacoes}, ";
+
             return this;
         }
 
@@ -32,6 +35,7 @@ namespace api_gym_ai.Builders
         {
             if (!string.IsNullOrEmpty(massaMuscular))
                 _informacoes += $"Massa Muscular: {massaMuscular}, ";
+
             return this;
         }
 
@@ -44,6 +48,7 @@ namespace api_gym_ai.Builders
         public IPromptBuilder ComPartesDoCorpoEmFoco(string partesDoCorpoEmFoco)
         {
            _informacoes += $"Partes do Corpo em Foco: {partesDoCorpoEmFoco}, ";
+
             return this;
         }
 
@@ -51,12 +56,14 @@ namespace api_gym_ai.Builders
         {
             if (!string.IsNullOrEmpty(percentualGordura))
                 _informacoes += $"Percentual de Gordura: {percentualGordura}, ";
+
             return this;
         }
 
         public IPromptBuilder ComPeso(string peso)
         {
             _informacoes += $"Peso: {peso}, ";
+
             return this;
         }
 
@@ -64,18 +71,21 @@ namespace api_gym_ai.Builders
         {
             if (!string.IsNullOrEmpty(sexo))
                 _informacoes += $"Sexo: {sexo}, ";
+
             return this;
         }
 
         public IPromptBuilder ComTempoDeTreino(string tempoDeTreino)
         {
-            _informacoes += $"Tempo de Treino: {tempoDeTreino}, ";
+            _informacoes += $"Tempo de Treino: {tempoDeTreino} minutos para cada variação, ";
+
             return this;
         }
 
         public IPromptBuilder ComVariacaoDeTreino(string variacao)
         {
             _informacoes += $"Variação de Treino: {variacao}, ";
+
             return this;
         }
 

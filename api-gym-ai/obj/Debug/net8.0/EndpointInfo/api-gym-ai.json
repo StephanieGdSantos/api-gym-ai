@@ -91,26 +91,43 @@
         "additionalProperties": false
       },
       "InfoCorporais": {
+        "required": [
+          "altura",
+          "idade",
+          "peso"
+        ],
         "type": "object",
         "properties": {
           "idade": {
-            "type": "string",
-            "nullable": true
+            "maximum": 100,
+            "minimum": 10,
+            "type": "integer",
+            "format": "int32"
           },
           "altura": {
-            "type": "string",
-            "nullable": true
+            "maximum": 2,8,
+            "minimum": 1,3,
+            "type": "number",
+            "format": "double"
           },
           "peso": {
-            "type": "string",
-            "nullable": true
+            "maximum": 500,
+            "minimum": 1,
+            "type": "number",
+            "format": "double"
           },
           "percentualGordura": {
-            "type": "string",
+            "maximum": 50,
+            "minimum": 10,
+            "type": "number",
+            "format": "double",
             "nullable": true
           },
           "massaMuscular": {
-            "type": "string",
+            "maximum": 50,
+            "minimum": 15,
+            "type": "number",
+            "format": "double",
             "nullable": true
           },
           "sexo": {
@@ -128,26 +145,33 @@
         "additionalProperties": false
       },
       "InfoObjetivo": {
+        "required": [
+          "objetivo",
+          "partesDoCorpoEmFoco",
+          "tempoDeTreino",
+          "variacaoTreino"
+        ],
         "type": "object",
         "properties": {
           "objetivo": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "partesDoCorpoEmFoco": {
             "type": "array",
             "items": {
               "type": "string"
-            },
-            "nullable": true
+            }
           },
           "tempoDeTreino": {
-            "type": "string",
-            "nullable": true
+            "maximum": 240,
+            "minimum": 20,
+            "type": "number",
+            "format": "double"
           },
           "variacaoTreino": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           }
         },
         "additionalProperties": false

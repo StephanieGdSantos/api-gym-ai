@@ -7,13 +7,13 @@ namespace api_gym_ai.Builders
     {
         private InfoCorporais _infoCorporais = new();
 
-        public IInfoCorporaisBuilder ComAltura(string altura)
+        public IInfoCorporaisBuilder ComAltura(double altura)
         {
             _infoCorporais.Altura = altura;
             return this;
         }
 
-        public IInfoCorporaisBuilder ComIdade(string idade)
+        public IInfoCorporaisBuilder ComIdade(int idade)
         {
             _infoCorporais.Idade = idade;
             return this;
@@ -25,23 +25,23 @@ namespace api_gym_ai.Builders
             return this;
         }
 
-        public IInfoCorporaisBuilder ComMassaMuscular(string? massaMuscular)
+        public IInfoCorporaisBuilder ComMassaMuscular(double? massaMuscular)
         {
-            if (!string.IsNullOrEmpty(massaMuscular))
+            if (massaMuscular.HasValue)
                 _infoCorporais.MassaMuscular = massaMuscular;
 
             return this;
         }
 
-        public IInfoCorporaisBuilder ComPercentualGordura(string? percentualGordura)
+        public IInfoCorporaisBuilder ComPercentualGordura(double? percentualGordura)
         {
-            if (!string.IsNullOrEmpty(percentualGordura))
+            if (percentualGordura.HasValue)
                 _infoCorporais.PercentualGordura = percentualGordura;
 
             return this;
         }
 
-        public IInfoCorporaisBuilder ComPeso(string peso)
+        public IInfoCorporaisBuilder ComPeso(double peso)
         {
             _infoCorporais.Peso = peso;
             return this;

@@ -19,7 +19,7 @@ namespace api_gym_ai.Builders
             return this;
         }
 
-        public IInfoObjetivoBuilder ComTempoDeTreino(string tempo)
+        public IInfoObjetivoBuilder ComTempoDeTreino(double tempo)
         {
             _infoObjetivo.TempoDeTreino = tempo;
             return this;

@@ -4,12 +4,12 @@ namespace api_gym_ai.Interfaces
 {
     public interface IInfoCorporaisBuilder
     {
-        public IInfoCorporaisBuilder ComAltura(string altura);
-        public IInfoCorporaisBuilder ComIdade(string idade);
+        public IInfoCorporaisBuilder ComAltura(double altura);
+        public IInfoCorporaisBuilder ComIdade(int idade);
         public IInfoCorporaisBuilder ComLimitacoes(IEnumerable<string> limitacoes);
-        public IInfoCorporaisBuilder ComMassaMuscular(string? massaMuscular);
-        public IInfoCorporaisBuilder ComPercentualGordura(string? percentualGordura);
-        public IInfoCorporaisBuilder ComPeso(string peso);
+        public IInfoCorporaisBuilder ComMassaMuscular(double? massaMuscular);
+        public IInfoCorporaisBuilder ComPercentualGordura(double? percentualGordura);
+        public IInfoCorporaisBuilder ComPeso(double peso);
         public IInfoCorporaisBuilder ComSexo(string? sexo);
         public InfoCorporais Build();
     }

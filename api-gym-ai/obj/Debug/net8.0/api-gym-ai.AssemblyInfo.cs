@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("api-gym-ai")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1c518012fe13aee4523e3b92c2844ce0b95e935b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6b9c7f61f0081c3f8a8fae49d66be1ba37055b06")]
 [assembly: System.Reflection.AssemblyProductAttribute("api-gym-ai")]
 [assembly: System.Reflection.AssemblyTitleAttribute("api-gym-ai")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

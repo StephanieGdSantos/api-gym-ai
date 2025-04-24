@@ -35,26 +35,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Exercicio"
-                  }
+                  "$ref": "#/components/schemas/Treino"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Exercicio"
-                  }
+                  "$ref": "#/components/schemas/Treino"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Exercicio"
-                  }
+                  "$ref": "#/components/schemas/Treino"
                 }
               }
             }
@@ -176,6 +167,27 @@
         },
         "additionalProperties": false
       },
+      "Treino": {
+        "type": "object",
+        "properties": {
+          "variacaoDeTreino": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VariacaoDeTreino"
+            },
+            "nullable": true
+          },
+          "dataInicio": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dataFim": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
       "Usuario": {
         "type": "object",
         "properties": {
@@ -184,6 +196,27 @@
           },
           "objetivo": {
             "$ref": "#/components/schemas/InfoObjetivo"
+          }
+        },
+        "additionalProperties": false
+      },
+      "VariacaoDeTreino": {
+        "type": "object",
+        "properties": {
+          "dia": {
+            "type": "string",
+            "nullable": true
+          },
+          "musculosTrabalhados": {
+            "type": "string",
+            "nullable": true
+          },
+          "exercicio": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Exercicio"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

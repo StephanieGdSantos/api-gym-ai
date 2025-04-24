@@ -20,7 +20,7 @@ namespace api_gym_ai.Controllers
         }
 
         [HttpPost]
-        public async Task<IEnumerable<Exercicio>> Post([FromBody] Usuario informacoesUsuario)
+        public async Task<Treino> Post([FromBody] Usuario informacoesUsuario)
         {
             if (informacoesUsuario?.InfoCorporais == null || informacoesUsuario.Objetivo == null)
             {
@@ -42,9 +42,9 @@ namespace api_gym_ai.Controllers
 
             var retornoChat = await _cohereService.ChatAsync(promptFinal.Mensagem);
 
-            List<Exercicio> listaExercicios = ExercicioFacade.ListarExerciciosPropostos(retornoChat);
+            var treinoProposto = TreinoFacade.MontarTreino(retornoChat);
 
-            return listaExercicios;
+            return treinoProposto;
         }
     }
 }

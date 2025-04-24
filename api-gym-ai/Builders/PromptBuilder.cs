@@ -5,7 +5,7 @@ namespace api_gym_ai.Builders
 {
     public class PromptBuilder : IPromptBuilder
     {
-        private string _basePrompt { get; set; } = "Haja como um personal trainer e considere as seguintes informações: [informações]. A partir dessas informações recomende um plano de exercícios para fazer na academia. me responda utilizando especificamente o formato 'TREINO A: [exercício 1], [séries]x[repetições], [músculo(s) alvo separados por espaço]\n [exercício 2], [séries]x[repetições], [músculo(s) alvo separados por espaço] - Músculos trabalhados: [músculo 1, músculo 2] - TREINO B...', onde os itens com chaves são mascaras para serem preenchidas; exclua as chaves do texto.não quero mais informações além das pedidas. a mensagem retornada devem seguir exatamente o modelo passado";
+        private string _basePrompt { get; set; } = "Haja como um personal trainer e considere as seguintes informações: [informações]. A partir dessas informações recomende um plano de exercícios para fazer na academia. me responda utilizando especificamente o formato 'TREINO A-[exercício 1], [séries]x[repetições], [músculo(s) alvo separados por espaço]\n [exercício 2], [séries]x[repetições], [músculo(s) alvo separados por espaço]-[músculo trabalhado 1, músculo trabalhado 2]|TREINO B-[exercício 1], [séries]x[repetições], [músculo(s) alvo separados por espaço]\n [exercício 2], [séries]x[repetições], [músculo(s) alvo separados por espaço]-[músculo trabalhado 1, músculo trabalhado 2]|TREINO C-...', onde os itens com chaves são mascaras para serem preenchidas; exclua as chaves do texto.não quero mais informações além das pedidas. a mensagem retornada devem seguir exatamente o modelo passado";
 
         private string _informacoes { get; set; } = string.Empty;
 

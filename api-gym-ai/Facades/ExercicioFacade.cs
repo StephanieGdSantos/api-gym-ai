@@ -6,11 +6,9 @@ namespace api_gym_ai.Facades
 {
     public static class ExercicioFacade
     {
-        public static List<Exercicio> ListarExerciciosPropostos(string retornoChat)
+        public static List<Exercicio> ListarExerciciosPropostos(string treinoProposto)
         {
-            var exerciciosPropostos = ExtrairRespostaDoChat(retornoChat);
-
-            var exercicios = exerciciosPropostos.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            var exercicios = treinoProposto.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
             var listaExercicios = new List<Exercicio>();
             foreach (var item in exercicios)
             {
@@ -35,20 +33,6 @@ namespace api_gym_ai.Facades
             }
 
             return listaExercicios;
-        }
-
-        public static string ExtrairRespostaDoChat(string retornoChat)
-        {
-            var conteudoJson = JsonDocument.Parse(retornoChat);
-            var root = conteudoJson.RootElement;
-            var conteudoGeral = root.GetProperty("message").GetProperty("content");
-            var respostaChat = conteudoGeral[0].GetProperty("text").GetString();
-
-            if (respostaChat == null)
-            {
-                throw new Exception("Erro ao extrair a resposta do chat.");
-            }
-            return respostaChat;
         }
     }
 }

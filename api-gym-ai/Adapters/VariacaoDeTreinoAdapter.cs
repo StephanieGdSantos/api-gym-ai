@@ -7,12 +7,10 @@ namespace api_gym_ai.Facades
     public class VariacaoDeTreinoAdapter: IVariacaoDeTreinoAdapter
     {
         private readonly IExercicioAdapter _exercicioAdapter;
-        private readonly IExercicioBuilder _exercicioBuilder;
 
-        public VariacaoDeTreinoAdapter(IExercicioAdapter exercicioAdapter, IExercicioBuilder exercicioBuilder)
+        public VariacaoDeTreinoAdapter(IExercicioAdapter exercicioAdapter)
         {
             _exercicioAdapter = exercicioAdapter;
-            _exercicioBuilder = exercicioBuilder;
         }
 
         public List<VariacaoDeTreino> ListarVariacaoDeTreinos(Task<string> retornoChat)

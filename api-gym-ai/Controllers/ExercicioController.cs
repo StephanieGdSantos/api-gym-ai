@@ -13,36 +13,21 @@ namespace api_gym_ai.Controllers
     public class ExercicioController
     {
         private readonly ICohereService _cohereService;
+        private readonly ITreinoAdapter _treinoAdapter;
+        private readonly IPromptAdapter _promptAdapter;
 
-        public ExercicioController(ICohereService cohereService)
+        public ExercicioController(ICohereService cohereService, ITreinoAdapter treinoAdapter, IPromptAdapter promptAdapter)
         {
             _cohereService = cohereService;
+            _treinoAdapter = treinoAdapter;
+            _promptAdapter = promptAdapter;
         }
 
         [HttpPost]
-        public async Task<Treino> Post([FromBody] Usuario informacoesUsuario)
+        [ValidarPessoa]
+        public async Task<Treino> Post([FromBody] Pessoa pessoa)
         {
-            if (informacoesUsuario?.InfoCorporais == null || informacoesUsuario.Objetivo == null)
-            {
-                throw new ArgumentNullException(nameof(informacoesUsuario), "As informações do usuário não podem ser nulas.");
-            }
-
-            var promptFinal = new PromptBuilder()
-                .ComIdade(informacoesUsuario.InfoCorporais.Idade.ToString())
-                .ComPeso(informacoesUsuario.InfoCorporais.Peso.ToString())
-                .ComAltura(informacoesUsuario.InfoCorporais.Altura.ToString())
-                .ComMassaMuscular(informacoesUsuario.InfoCorporais.MassaMuscular?.ToString() ?? string.Empty)
-                .ComPercentualDeGordura(informacoesUsuario.InfoCorporais.PercentualGordura?.ToString() ?? string.Empty)
-                .ComLimitacoes(string.Join(", ", informacoesUsuario.InfoCorporais.Limitacoes ?? Enumerable.Empty<string>()))
-                .ComPartesDoCorpoEmFoco(string.Join(", ", informacoesUsuario.Objetivo.PartesDoCorpoEmFoco ?? Enumerable.Empty<string>()))
-                .ComObjetivo(informacoesUsuario.Objetivo.Objetivo)
-                .ComTempoDeTreino(informacoesUsuario.Objetivo.TempoDeTreino.ToString())
-                .ComVariacaoDeTreino(informacoesUsuario.Objetivo.VariacaoTreino)
-                .Build();
-
-            var retornoChat = await _cohereService.ChatAsync(promptFinal.Mensagem);
-
-            var treinoProposto = TreinoFacade.MontarTreino(retornoChat);
+            var treinoProposto = _treinoAdapter.MontarTreino(pessoa); 
 
             return treinoProposto;
         }

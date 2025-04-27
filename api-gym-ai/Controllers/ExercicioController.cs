@@ -1,6 +1,6 @@
 ﻿using api_gym_ai.Builders;
 using api_gym_ai.Facades;
-using api_gym_ai.Interfaces;
+using api_gym_ai.Interfaces.Adapters;
 using api_gym_ai.Models;
 using api_gym_ai.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -20,10 +20,13 @@ namespace api_gym_ai.Controllers
         }
 
         [HttpPost]
-        [ValidarPessoa]
         public async Task<Treino> Post([FromBody] Pessoa pessoa)
         {
-            var treinoProposto = _treinoAdapter.MontarTreino(pessoa); 
+            var treinoProposto = await _treinoAdapter.MontarTreino(pessoa);
+            if (treinoProposto == null)
+            {
+                throw new Exception("Erro ao montar o treino.");
+            }
 
             return treinoProposto;
         }

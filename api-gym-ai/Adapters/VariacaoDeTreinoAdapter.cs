@@ -1,13 +1,24 @@
 ﻿using api_gym_ai.Builders;
+using api_gym_ai.Interfaces;
 using api_gym_ai.Models;
 
 namespace api_gym_ai.Facades
 {
-    public static class VariacaoDeTreinoFacade
+    public class VariacaoDeTreinoAdapter: IVariacaoDeTreinoAdapter
     {
-        public static List<VariacaoDeTreino> ListarVariacaoDeTreinos(string retornoChat)
+        private readonly IExercicioAdapter _exercicioAdapter;
+        private readonly IExercicioBuilder _exercicioBuilder;
+
+        public VariacaoDeTreinoAdapter(IExercicioAdapter exercicioAdapter, IExercicioBuilder exercicioBuilder)
+        {
+            _exercicioAdapter = exercicioAdapter;
+            _exercicioBuilder = exercicioBuilder;
+        }
+
+        public List<VariacaoDeTreino> ListarVariacaoDeTreinos(Task<string> retornoChat)
         {
             var variacaoDeTreinosSplit = retornoChat
+                .Result
                 .Split('|')
                 .ToList();
 
@@ -18,7 +29,7 @@ namespace api_gym_ai.Facades
                     .Split('-')
                     .ToList();
 
-                var exerciciosDoTreino = ExercicioFacade.ListarExerciciosPropostos(treinoSplit[1]);
+                var exerciciosDoTreino = _exercicioAdapter.ListarExerciciosPropostos(treinoSplit[1]);
 
                 var treinoProposto = new VariacaoDeTreino(
                     treinoSplit[0],

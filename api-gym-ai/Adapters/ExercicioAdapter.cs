@@ -1,12 +1,19 @@
 ﻿using api_gym_ai.Builders;
+using api_gym_ai.Interfaces;
 using api_gym_ai.Models;
 using System.Text.Json;
 
 namespace api_gym_ai.Facades
 {
-    public static class ExercicioFacade
+    public class ExercicioAdapter : IExercicioAdapter
     {
-        public static List<Exercicio> ListarExerciciosPropostos(string treinoProposto)
+        private readonly IExercicioBuilder _exercicioBuilder;
+        public ExercicioAdapter(IExercicioBuilder exercicioBuilder)
+        {
+            _exercicioBuilder = exercicioBuilder;
+        }
+
+        public List<Exercicio> ListarExerciciosPropostos(string treinoProposto)
         {
             var exercicios = treinoProposto.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
             var listaExercicios = new List<Exercicio>();
@@ -21,7 +28,7 @@ namespace api_gym_ai.Facades
                     var repeticoes = numeroRepeticoes[1].Trim();
                     var musculosAlvo = partes[2].Trim().Split(" ");
 
-                    var novoExercicio = new ExercicioBuilder()
+                    var novoExercicio = _exercicioBuilder
                         .ComNome(nomeExercicio)
                         .ComSeries(series)
                         .ComRepeticoes(repeticoes)

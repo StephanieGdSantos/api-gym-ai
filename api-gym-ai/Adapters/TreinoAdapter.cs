@@ -1,14 +1,29 @@
 ﻿using api_gym_ai.Builders;
+using api_gym_ai.Interfaces;
 using api_gym_ai.Models;
 
 namespace api_gym_ai.Facades
 {
-    public static class TreinoFacade
+    public class TreinoAdapter : ITreinoAdapter
     {
-        public static Treino? MontarTreino(string retornoChat)
+        private readonly IPromptAdapter _promptAdapter;
+        private readonly IVariacaoDeTreinoAdapter _variacaoDeTreinoAdapter;
+        private readonly IExercicioAdapter _exercicioAdapter;
+        private readonly IExercicioBuilder _exercicioBuilder;
+
+        public TreinoAdapter(IPromptAdapter promptAdapter, IVariacaoDeTreinoAdapter variacaoDeTreinoAdapter, IExercicioAdapter exercicioAdapter, IExercicioBuilder exercicioBuilder)
         {
-            var treinoProposto = PromptFacade.ExtrairRespostaDoChat(retornoChat);
-            var variacaoDeTreino = VariacaoDeTreinoFacade.ListarVariacaoDeTreinos(treinoProposto);
+            _promptAdapter = promptAdapter;
+            _variacaoDeTreinoAdapter = variacaoDeTreinoAdapter;
+            _exercicioAdapter = exercicioAdapter;
+            _exercicioBuilder = exercicioBuilder;
+        }
+
+        public Treino? MontarTreino(Pessoa pessoa)
+        {
+            var promptFinal = _promptAdapter.ConstruirPrompt(pessoa);
+            var treinoProposto = _promptAdapter.ExtrairRespostaDoChat(promptFinal);
+            var variacaoDeTreino = _variacaoDeTreinoAdapter.ListarVariacaoDeTreinos(treinoProposto);
 
             var quantidadeVariacoes = variacaoDeTreino.Count;
 

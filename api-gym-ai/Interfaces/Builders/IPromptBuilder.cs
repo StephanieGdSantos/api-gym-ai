@@ -1,6 +1,6 @@
 ﻿using api_gym_ai.Models;
 
-namespace api_gym_ai.Interfaces
+namespace api_gym_ai.Interfaces.Builders
 {
     public interface IPromptBuilder
     {
@@ -19,6 +19,7 @@ namespace api_gym_ai.Interfaces
         public IPromptBuilder ComMassaMuscular(string? massaMuscular);
         public IPromptBuilder ComPercentualDeGordura(string? percentualGordura);
         public IPromptBuilder ComVariacaoDeTreino(string variacao);
+        public IPromptBuilder ComVariacaoMuscular(string variacaoMuscular);
         public Prompt Build();
     }
 }

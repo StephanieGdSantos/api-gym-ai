@@ -1,6 +1,6 @@
 ﻿using api_gym_ai.Models;
 
-namespace api_gym_ai.Interfaces
+namespace api_gym_ai.Interfaces.Adapters
 {
     public interface IPromptAdapter
     {

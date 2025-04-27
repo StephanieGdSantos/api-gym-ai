@@ -1,4 +1,4 @@
-﻿namespace api_gym_ai.Interfaces
+﻿namespace api_gym_ai.Interfaces.Services
 {
     public interface ICohereService
     {

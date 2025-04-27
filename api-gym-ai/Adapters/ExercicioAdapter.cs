@@ -28,18 +28,23 @@ namespace api_gym_ai.Facades
                     var repeticoes = numeroRepeticoes[1].Trim();
                     var musculosAlvo = partes[2].Trim().Split(" ");
 
-                    var novoExercicio = _exercicioBuilder
-                        .ComNome(nomeExercicio)
-                        .ComSeries(series)
-                        .ComRepeticoes(repeticoes)
-                        .ComMusculosAlvo(musculosAlvo)
-                        .Build();
+                    var novoExercicio = ConstruirExercicio(nomeExercicio, series, repeticoes, musculosAlvo);
 
                     listaExercicios.Add(novoExercicio);
                 }
             }
 
             return listaExercicios;
+        }
+
+        public Exercicio ConstruirExercicio(string nome, int series, string repeticoes, IEnumerable<string> musculosAlvo)
+        {
+            return _exercicioBuilder
+                .ComNome(nome)
+                .ComSeries(series)
+                .ComRepeticoes(repeticoes)
+                .ComMusculosAlvo(musculosAlvo)
+                .Build();
         }
     }
 }

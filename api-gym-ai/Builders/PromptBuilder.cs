@@ -1,5 +1,6 @@
-﻿using api_gym_ai.Interfaces;
+﻿using api_gym_ai.Interfaces.Builders;
 using api_gym_ai.Models;
+using System.Numerics;
 
 namespace api_gym_ai.Builders
 {

@@ -1,4 +1,4 @@
-﻿using api_gym_ai.Interfaces;
+﻿using api_gym_ai.Interfaces.Builders;
 using api_gym_ai.Models;
 
 namespace api_gym_ai.Builders

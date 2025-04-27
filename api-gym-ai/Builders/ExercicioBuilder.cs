@@ -1,11 +1,11 @@
-﻿using api_gym_ai.Interfaces;
+﻿using api_gym_ai.Interfaces.Builders;
 using api_gym_ai.Models;
 
 namespace api_gym_ai.Builders
 {
     public class ExercicioBuilder : IExercicioBuilder
     {
-        private readonly Exercicio _exercicio = new();
+        private Exercicio _exercicio = new();
 
         public IExercicioBuilder ComMusculosAlvo(IEnumerable<string> musculosAlvo)
         {
@@ -33,7 +33,17 @@ namespace api_gym_ai.Builders
 
         public Exercicio Build()
         {
-            return _exercicio;
+            var exercicioConstruido = new Exercicio
+            {
+                Nome = _exercicio.Nome,
+                Series = _exercicio.Series,
+                Repeticoes = _exercicio.Repeticoes,
+                MusculoAlvo = _exercicio.MusculoAlvo
+            };
+
+            _exercicio = new Exercicio();
+
+            return exercicioConstruido;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using api_gym_ai.Builders;
-using api_gym_ai.Interfaces;
+using api_gym_ai.Interfaces.Adapters;
+using api_gym_ai.Interfaces.Builders;
 using api_gym_ai.Models;
 using System.Text.Json;
 
@@ -15,7 +16,7 @@ namespace api_gym_ai.Facades
 
         public List<Exercicio> ListarExerciciosPropostos(string treinoProposto)
         {
-            var exercicios = treinoProposto.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            var exercicios = treinoProposto.Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries);
             var listaExercicios = new List<Exercicio>();
             foreach (var item in exercicios)
             {

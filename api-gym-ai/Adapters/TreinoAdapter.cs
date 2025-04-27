@@ -1,5 +1,6 @@
 ﻿using api_gym_ai.Builders;
-using api_gym_ai.Interfaces;
+using api_gym_ai.Interfaces.Adapters;
+using api_gym_ai.Interfaces.Builders;
 using api_gym_ai.Models;
 
 namespace api_gym_ai.Facades
@@ -8,21 +9,19 @@ namespace api_gym_ai.Facades
     {
         private readonly IPromptAdapter _promptAdapter;
         private readonly IVariacaoDeTreinoAdapter _variacaoDeTreinoAdapter;
-        private readonly IExercicioAdapter _exercicioAdapter;
-        private readonly IExercicioBuilder _exercicioBuilder;
+        private readonly ITreinoBuilder _treinoBuilder;
 
-        public TreinoAdapter(IPromptAdapter promptAdapter, IVariacaoDeTreinoAdapter variacaoDeTreinoAdapter, IExercicioAdapter exercicioAdapter, IExercicioBuilder exercicioBuilder)
+        public TreinoAdapter(IPromptAdapter promptAdapter, IVariacaoDeTreinoAdapter variacaoDeTreinoAdapter, ITreinoBuilder treinoBuilder)
         {
             _promptAdapter = promptAdapter;
             _variacaoDeTreinoAdapter = variacaoDeTreinoAdapter;
-            _exercicioAdapter = exercicioAdapter;
-            _exercicioBuilder = exercicioBuilder;
+            _treinoBuilder = treinoBuilder;
         }
 
-        public Treino? MontarTreino(Pessoa pessoa)
+        public async Task<Treino?> MontarTreino(Pessoa pessoa)
         {
             var promptFinal = _promptAdapter.ConstruirPrompt(pessoa);
-            var treinoProposto = _promptAdapter.ExtrairRespostaDoChat(promptFinal);
+            var treinoProposto = await _promptAdapter.ExtrairRespostaDoChat(promptFinal);
             var variacaoDeTreino = _variacaoDeTreinoAdapter.ListarVariacaoDeTreinos(treinoProposto);
 
             var quantidadeVariacoes = variacaoDeTreino.Count;
@@ -30,14 +29,14 @@ namespace api_gym_ai.Facades
             switch (quantidadeVariacoes)
             {
                 case 2:
-                    return new TreinoBuilder()
+                    return _treinoBuilder
                         .ComVariacaoA(variacaoDeTreino[0])
                         .ComVariacaoB(variacaoDeTreino[1])
                         .ComDataInicio(DateTime.Now)
                         .ComDataFim(DateTime.Now.AddDays(120))
                         .Build();
                 case 3:
-                    return new TreinoBuilder()
+                    return _treinoBuilder
                         .ComVariacaoA(variacaoDeTreino[0])
                         .ComVariacaoB(variacaoDeTreino[1])
                         .ComVariacaoC(variacaoDeTreino[2])
@@ -45,7 +44,7 @@ namespace api_gym_ai.Facades
                         .ComDataFim(DateTime.Now.AddDays(120))
                         .Build();
                 case 4:
-                    return new TreinoBuilder()
+                    return _treinoBuilder
                         .ComVariacaoA(variacaoDeTreino[0])
                         .ComVariacaoB(variacaoDeTreino[1])
                         .ComVariacaoC(variacaoDeTreino[2])

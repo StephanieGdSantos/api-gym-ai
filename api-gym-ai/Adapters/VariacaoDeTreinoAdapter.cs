@@ -1,5 +1,6 @@
 ﻿using api_gym_ai.Builders;
-using api_gym_ai.Interfaces;
+using api_gym_ai.Interfaces.Adapters;
+using api_gym_ai.Interfaces.Builders;
 using api_gym_ai.Models;
 
 namespace api_gym_ai.Facades
@@ -13,32 +14,38 @@ namespace api_gym_ai.Facades
             _exercicioAdapter = exercicioAdapter;
         }
 
-        public List<VariacaoDeTreino> ListarVariacaoDeTreinos(Task<string> retornoChat)
+        public List<VariacaoDeTreino> ListarVariacaoDeTreinos(string retornoChat)
         {
-            var variacaoDeTreinosSplit = retornoChat
-                .Result
-                .Split('|')
-                .ToList();
-
-            var listaVariacaoDeTreinos = new List<VariacaoDeTreino>();
-            foreach (var treino in variacaoDeTreinosSplit)
+            try
             {
-                var treinoSplit = treino
-                    .Split('-')
+                var variacaoDeTreinosSplit = retornoChat
+                    .Split('|')
                     .ToList();
 
-                var exerciciosDoTreino = _exercicioAdapter.ListarExerciciosPropostos(treinoSplit[1]);
+                var listaVariacaoDeTreinos = new List<VariacaoDeTreino>();
+                foreach (var treino in variacaoDeTreinosSplit)
+                {
+                    var treinoSplit = treino
+                        .Split('-')
+                        .ToList();
 
-                var treinoProposto = new VariacaoDeTreino(
-                    treinoSplit[0],
-                    exerciciosDoTreino,
-                    treinoSplit[2]
-                );
+                    var exerciciosDoTreino = _exercicioAdapter.ListarExerciciosPropostos(treinoSplit[1]);
 
-                listaVariacaoDeTreinos.Add(treinoProposto);
+                    var treinoProposto = new VariacaoDeTreino(
+                        treinoSplit[0],
+                        exerciciosDoTreino,
+                        treinoSplit[2]
+                    );
+
+                    listaVariacaoDeTreinos.Add(treinoProposto);
+                }
+
+                return listaVariacaoDeTreinos;
             }
-
-            return listaVariacaoDeTreinos;
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao listar variações de treino: " + ex.Message);
+            }
         }
     }
 }

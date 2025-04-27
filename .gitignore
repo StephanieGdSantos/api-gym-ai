@@ -1,0 +1,95 @@
+# .gitignore para projetos .NET Core e Visual Studio
+# Criado com base no template gerado por https://www.toptal.com/developers/gitignore
+
+### Seções principais ###
+# Build folders
+bin/
+obj/
+artifacts/
+
+# Node.js (se usado no projeto)
+node_modules/
+wwwroot/node_modules/
+
+# Configurações específicas do usuário
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Cache e arquivos temporários
+*.log
+*.tmp
+*.cache
+*.tlog
+*.pidb
+*.svclog
+
+# Configurações do Visual Studio
+.vs/
+*.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Resultados de testes
+[Tt]est[Rr]esult*/
+*.coverage
+*.coveragexml
+*.trx
+
+# Publicação e deploy
+publish/
+*.pubxml
+*.publishproj
+PublishScripts/
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+
+# Azure
+*.azurePubxml
+csx/
+*.build.csdef
+ecf/
+rcf/
+
+# Arquivos de backup e históricos
+.history/
+.localhistory/
+MigrationBackup/
+
+# Outros
+*.pfx
+*.publishsettings
+*.dbmdl
+*.jfm
+*.rptproj.bak
+*.mdf
+*.ldf
+*.ndf
+
+# Ferramentas e extensões
+_ReSharper*/
+*.DotSettings.user
+.axoCover/*
+*.dotCover
+*.nvuser
+.mfractor/
+.ionide/
+FodyWeavers.xsd
+
+# Logs de build
+*.binlog
+
+# Arquivos gerados automaticamente
+Generated_Code/
+ScaffoldingReadMe.txt
+
+# Arquivos relacionados ao GitHub Copilot
+*.copilot.*

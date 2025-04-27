@@ -9,7 +9,7 @@ namespace api_gym_ai.Services;
 public class CohereService : ICohereService
 {
     private readonly HttpClient _httpClient;
-    private const string ApiKey = "abcd";
+    private const string ApiKey = "HdOOyTbsIB2YXT1CboEHL9yEFX08T6ffD2S6IAnW";
     private const string Url = "https://api.cohere.com/v2/chat";
 
     public CohereService(HttpClient httpClient)

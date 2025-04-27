@@ -19,5 +19,8 @@ namespace api_gym_ai.Models
 
         [Required(ErrorMessage = "A variação de treino é obrigatória.")]
         public string VariacaoTreino { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "A variação muscular do treino é obrigatória.")]
+        public string VariacaoMuscular { get; set; } = string.Empty;
     }
 }

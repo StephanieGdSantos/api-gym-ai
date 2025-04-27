@@ -1,5 +1,7 @@
 ﻿using api_gym_ai.Builders;
-using api_gym_ai.Interfaces;
+using api_gym_ai.Interfaces.Adapters;
+using api_gym_ai.Interfaces.Builders;
+using api_gym_ai.Interfaces.Services;
 using api_gym_ai.Models;
 using api_gym_ai.Services;
 using System.Text.Json;
@@ -44,10 +46,11 @@ namespace api_gym_ai.Facades
                 .ComMassaMuscular(pessoa.InfoCorporais.MassaMuscular?.ToString() ?? string.Empty)
                 .ComPercentualDeGordura(pessoa.InfoCorporais.PercentualGordura?.ToString() ?? string.Empty)
                 .ComLimitacoes(string.Join(", ", pessoa.InfoCorporais.Limitacoes ?? Enumerable.Empty<string>()))
-                .ComPartesDoCorpoEmFoco(string.Join(", ", pessoa.Objetivo.PartesDoCorpoEmFoco ?? Enumerable.Empty<string>()))
-                .ComObjetivo(pessoa.Objetivo.Objetivo)
-                .ComTempoDeTreino(pessoa.Objetivo.TempoDeTreino.ToString())
-                .ComVariacaoDeTreino(pessoa.Objetivo.VariacaoTreino)
+                .ComPartesDoCorpoEmFoco(string.Join(", ", pessoa.Preferencias.PartesDoCorpoEmFoco ?? Enumerable.Empty<string>()))
+                .ComObjetivo(pessoa.Preferencias.Objetivo)
+                .ComTempoDeTreino(pessoa.Preferencias.TempoDeTreino.ToString())
+                .ComVariacaoDeTreino(pessoa.Preferencias.VariacaoTreino)
+                .ComVariacaoMuscular(pessoa.Preferencias.VariacaoMuscular)
                 .Build();
 
             if (promptFinal == null)

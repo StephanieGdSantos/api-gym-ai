@@ -18,8 +18,10 @@ namespace api_gym_ai.Models
         [Range(1, 500, ErrorMessage = "O peso deve ser maior que 0 e menor que 500.")]
         public double Peso { get; set; }
 
+        [Required(ErrorMessage = "O fornecimento de informações corporais é obrigatório.")]
         public InfoCorporais? InfoCorporais { get; set; }
 
-        public InfoPreferencias? Objetivo { get; set; }
+        [Required(ErrorMessage = "É obrigatório especificar as preferências de treino.")]
+        public InfoPreferencias? Preferencias { get; set; }
     }
 }

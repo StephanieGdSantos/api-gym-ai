@@ -12,15 +12,11 @@ namespace api_gym_ai.Controllers
     [Route("[controller]")]
     public class ExercicioController
     {
-        private readonly ICohereService _cohereService;
         private readonly ITreinoAdapter _treinoAdapter;
-        private readonly IPromptAdapter _promptAdapter;
 
-        public ExercicioController(ICohereService cohereService, ITreinoAdapter treinoAdapter, IPromptAdapter promptAdapter)
+        public ExercicioController(ITreinoAdapter treinoAdapter)
         {
-            _cohereService = cohereService;
             _treinoAdapter = treinoAdapter;
-            _promptAdapter = promptAdapter;
         }
 
         [HttpPost]

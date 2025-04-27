@@ -7,18 +7,6 @@ namespace api_gym_ai.Builders
     {
         private InfoCorporais _infoCorporais = new();
 
-        public IInfoCorporaisBuilder ComAltura(double altura)
-        {
-            _infoCorporais.Altura = altura;
-            return this;
-        }
-
-        public IInfoCorporaisBuilder ComIdade(int idade)
-        {
-            _infoCorporais.Idade = idade;
-            return this;
-        }
-
         public IInfoCorporaisBuilder ComLimitacoes(IEnumerable<string> limitacoes)
         {
             _infoCorporais.Limitacoes = limitacoes;
@@ -38,12 +26,6 @@ namespace api_gym_ai.Builders
             if (percentualGordura.HasValue)
                 _infoCorporais.PercentualGordura = percentualGordura;
 
-            return this;
-        }
-
-        public IInfoCorporaisBuilder ComPeso(double peso)
-        {
-            _infoCorporais.Peso = peso;
             return this;
         }
 

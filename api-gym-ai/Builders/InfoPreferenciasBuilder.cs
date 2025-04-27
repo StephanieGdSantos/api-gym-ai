@@ -3,29 +3,29 @@ using api_gym_ai.Models;
 
 namespace api_gym_ai.Builders
 {
-    public class InfoObjetivoBuilder : IInfoObjetivoBuilder
+    public class InfoPreferenciasBuilder : IInfoPreferenciasBuilder
     {
-        private InfoObjetivo _infoObjetivo = new();
+        private InfoPreferencias _infoObjetivo = new();
 
-        public IInfoObjetivoBuilder ComObjetivo(string objetivo)
+        public IInfoPreferenciasBuilder ComObjetivo(string objetivo)
         {
             _infoObjetivo.Objetivo = objetivo;
             return this;
         }
 
-        public IInfoObjetivoBuilder ComPartesDoCorpoEmFoco(string partesDoCorpo)
+        public IInfoPreferenciasBuilder ComPartesDoCorpoEmFoco(string partesDoCorpo)
         {
             _infoObjetivo.PartesDoCorpoEmFoco = partesDoCorpo.Split(',').Select(p => p.Trim());
             return this;
         }
 
-        public IInfoObjetivoBuilder ComTempoDeTreino(double tempo)
+        public IInfoPreferenciasBuilder ComTempoDeTreino(double tempo)
         {
             _infoObjetivo.TempoDeTreino = tempo;
             return this;
         }
 
-        public InfoObjetivo Build()
+        public InfoPreferencias Build()
         {
             return _infoObjetivo;
         }

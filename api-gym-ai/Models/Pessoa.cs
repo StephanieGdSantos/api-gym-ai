@@ -22,6 +22,6 @@ namespace api_gym_ai.Models
         public InfoCorporais? InfoCorporais { get; set; }
 
         [Required(ErrorMessage = "É obrigatório especificar as preferências de treino.")]
-        public InfoPreferencias? Preferencias { get; set; }
+        public InfoPreferencias? InfoPreferencias { get; set; }
     }
 }

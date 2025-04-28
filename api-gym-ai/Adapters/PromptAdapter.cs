@@ -21,24 +21,45 @@ namespace api_gym_ai.Facades
 
         public async Task<string> ExtrairRespostaDoChat(Prompt prompt)
         {
-            var retornoChat = await _cohereService.ChatAsync(prompt.Mensagem);
-            if (string.IsNullOrEmpty(retornoChat))
-                throw new Exception("Erro ao obter resposta do chat.");
-
-            var conteudoJson = JsonDocument.Parse(retornoChat);
-            var root = conteudoJson.RootElement;
-            var conteudoGeral = root.GetProperty("message").GetProperty("content");
-            var respostaChat = conteudoGeral[0].GetProperty("text").GetString();
-
-            if (respostaChat == null)
+            try
             {
-                throw new Exception("Erro ao extrair a resposta do chat.");
+                var response = await _cohereService.ChatAsync(prompt.Mensagem);
+
+                if (string.IsNullOrWhiteSpace(response))
+                {
+                    throw new Exception("A resposta do serviço está vazia.");
+                }
+
+                var jsonResponse = JsonSerializer.Deserialize<JsonElement>(response);
+
+                if (!jsonResponse.TryGetProperty("message", out var message) ||
+                    !message.TryGetProperty("content", out var content) ||
+                    content.ValueKind != JsonValueKind.Array ||
+                    content.GetArrayLength() == 0 ||
+                    !content[0].TryGetProperty("text", out var text))
+                {
+                    throw new JsonException("O JSON não contém as propriedades esperadas.");
+                }
+
+                return text.GetString();
             }
-            return respostaChat;
+            catch (JsonException ex)
+            {
+                throw new JsonException("Erro ao processar o JSON da resposta.", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao extrair a resposta do chat.", ex);
+            }
         }
 
         public Prompt ConstruirPrompt(Pessoa pessoa)
         {
+            if (pessoa == null)
+            {
+                throw new ArgumentNullException(nameof(pessoa), "A pessoa não pode ser nula.");
+            }
+
             var promptFinal = _promptBuilder
                 .ComIdade(pessoa.Idade.ToString())
                 .ComPeso(pessoa.Peso.ToString())
@@ -46,15 +67,12 @@ namespace api_gym_ai.Facades
                 .ComMassaMuscular(pessoa.InfoCorporais.MassaMuscular?.ToString() ?? string.Empty)
                 .ComPercentualDeGordura(pessoa.InfoCorporais.PercentualGordura?.ToString() ?? string.Empty)
                 .ComLimitacoes(string.Join(", ", pessoa.InfoCorporais.Limitacoes ?? Enumerable.Empty<string>()))
-                .ComPartesDoCorpoEmFoco(string.Join(", ", pessoa.Preferencias.PartesDoCorpoEmFoco ?? Enumerable.Empty<string>()))
-                .ComObjetivo(pessoa.Preferencias.Objetivo)
-                .ComTempoDeTreino(pessoa.Preferencias.TempoDeTreino.ToString())
-                .ComVariacaoDeTreino(pessoa.Preferencias.VariacaoTreino)
-                .ComVariacaoMuscular(pessoa.Preferencias.VariacaoMuscular)
+                .ComPartesDoCorpoEmFoco(string.Join(", ", pessoa.InfoPreferencias.PartesDoCorpoEmFoco ?? Enumerable.Empty<string>()))
+                .ComObjetivo(pessoa.InfoPreferencias.Objetivo)
+                .ComTempoDeTreino(pessoa.InfoPreferencias.TempoDeTreino.ToString())
+                .ComVariacaoDeTreino(pessoa.InfoPreferencias.VariacaoTreino)
+                .ComVariacaoMuscular(pessoa.InfoPreferencias.VariacaoMuscular)
                 .Build();
-
-            if (promptFinal == null)
-                throw new Exception("Erro ao construir o prompt.");
 
             return promptFinal;
         }

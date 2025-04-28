@@ -35,14 +35,38 @@ public class CohereService : ICohereService
 
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
 
-        var response = await _httpClient.PostAsync(_url, content);
-
-        if (!response.IsSuccessStatusCode)
+        try
         {
-            var error = await response.Content.ReadAsStringAsync();
-            throw new ApplicationException($"Erro da API Cohere: {error}");
-        }
+            var response = await _httpClient.PostAsync(_url, content);
 
-        return await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                throw new ApplicationException($"Erro da API Cohere: {error}");
+            }
+
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            var jsonResponse = JsonSerializer.Deserialize<JsonElement>(responseBody);
+            if (!jsonResponse.TryGetProperty("message", out var message) ||
+                !message.TryGetProperty("content", out var contentProperty))
+            {
+                throw new ApplicationException("Resposta inválida da API Cohere: JSON não contém as propriedades esperadas.");
+            }
+
+            return responseBody;
+        }
+        catch (HttpRequestException ex)
+        {
+            throw new ApplicationException($"Erro ao se conectar com a API Cohere: {ex.Message}");
+        }
+        catch (JsonException ex)
+        {
+            throw new ApplicationException($"Erro ao processar a resposta da API Cohere: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            throw new ApplicationException($"Erro inesperado: {ex.Message}");
+        }
     }
 }

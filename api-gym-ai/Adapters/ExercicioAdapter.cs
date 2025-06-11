@@ -16,24 +16,40 @@ namespace api_gym_ai.Facades
 
         public List<Exercicio> ListarExerciciosPropostos(string treinoProposto)
         {
-            var exercicios = treinoProposto.Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries);
+            var exercicios = treinoProposto
+                .Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries)
+                .ToList();
+
             var listaExercicios = new List<Exercicio>();
-            foreach (var item in exercicios)
+
+            exercicios.ForEach(exercicio =>
             {
-                var partes = item.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                var partes = exercicio
+                    .Split([','], StringSplitOptions.RemoveEmptyEntries);
+
                 if (partes.Length == 3)
                 {
-                    var nomeExercicio = partes[0].Trim();
-                    var numeroRepeticoes = partes[1].Split("x");
-                    var series = int.Parse(numeroRepeticoes[0].Trim());
-                    var repeticoes = numeroRepeticoes[1].Trim();
-                    var musculosAlvo = partes[2].Trim().Split(" ");
+                    var nomeExercicio = partes[0]
+                        .Trim();
+
+                    var numeroRepeticoes = partes[1]
+                        .Split("x");
+
+                    var series = int.Parse(numeroRepeticoes[0]
+                        .Trim());
+
+                    var repeticoes = numeroRepeticoes[1]
+                        .Trim();
+
+                    var musculosAlvo = partes[2]
+                        .Trim()
+                        .Split(" ");
 
                     var novoExercicio = ConstruirExercicio(nomeExercicio, series, repeticoes, musculosAlvo);
 
                     listaExercicios.Add(novoExercicio);
                 }
-            }
+            });
 
             return listaExercicios;
         }

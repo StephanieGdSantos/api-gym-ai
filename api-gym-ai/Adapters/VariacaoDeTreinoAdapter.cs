@@ -23,7 +23,8 @@ namespace api_gym_ai.Facades
                     .ToList();
 
                 var listaVariacaoDeTreinos = new List<VariacaoDeTreino>();
-                foreach (var treino in variacaoDeTreinosSplit)
+
+                variacaoDeTreinosSplit.ForEach(treino =>
                 {
                     var treinoSplit = treino
                         .Split('-')
@@ -38,7 +39,7 @@ namespace api_gym_ai.Facades
                     );
 
                     listaVariacaoDeTreinos.Add(treinoProposto);
-                }
+                });
 
                 return listaVariacaoDeTreinos;
             }

@@ -12,22 +12,7 @@ namespace api_gym_ai.Builders
             _treino.VariacaoDeTreino = new List<VariacaoDeTreino>();
         }
 
-        public ITreinoBuilder ComVariacaoA(VariacaoDeTreino variacaoDeTreino)
-        {
-            _treino.VariacaoDeTreino.Add(variacaoDeTreino);
-            return this;
-        }
-        public ITreinoBuilder ComVariacaoB(VariacaoDeTreino variacaoDeTreino)
-        {
-            _treino.VariacaoDeTreino.Add(variacaoDeTreino);
-            return this;
-        }
-        public ITreinoBuilder ComVariacaoC(VariacaoDeTreino variacaoDeTreino)
-        {
-            _treino.VariacaoDeTreino.Add(variacaoDeTreino);
-            return this;
-        }
-        public ITreinoBuilder ComVariacaoD(VariacaoDeTreino variacaoDeTreino)
+        public ITreinoBuilder ComVariacao(VariacaoDeTreino variacaoDeTreino)
         {
             _treino.VariacaoDeTreino.Add(variacaoDeTreino);
             return this;

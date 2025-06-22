@@ -1,4 +1,5 @@
 ﻿using api_gym_ai.Builders;
+using api_gym_ai.Exceptions;
 using api_gym_ai.Interfaces.Adapters;
 using api_gym_ai.Interfaces.Builders;
 using api_gym_ai.Models;
@@ -35,7 +36,7 @@ namespace api_gym_ai.Facades
             var exercicioTemMusculosAlvo = json.TryGetProperty("musculoAlvo", out var musculosAlvo);
 
             if (!exercicioTemNome || !exercicioTemSeries || !exercicioTemRepeticoes || !exercicioTemMusculosAlvo)
-                throw new Exception("Dados de exercício proposto ou descrição ausentes.");
+                throw new JsonChatException("Dados de exercício proposto ou descrição ausentes.");
 
             var listaMusculosAlvo = musculosAlvo
                 .EnumerateArray()

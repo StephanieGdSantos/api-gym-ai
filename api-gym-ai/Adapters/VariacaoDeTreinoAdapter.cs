@@ -1,4 +1,5 @@
 ﻿using api_gym_ai.Builders;
+using api_gym_ai.Exceptions;
 using api_gym_ai.Interfaces.Adapters;
 using api_gym_ai.Interfaces.Builders;
 using api_gym_ai.Models;
@@ -22,7 +23,7 @@ namespace api_gym_ai.Facades
                 var jsonResponse = JsonSerializer.Deserialize<JsonElement>(retornoChat);
 
                 if (!jsonResponse.TryGetProperty("variacaoDeTreino", out var variacaoDeTreinos))
-                    return new List<VariacaoDeTreino>(); //adiciona tratamento de erros depois
+                    throw new JsonChatException("Proposta de treino não contém variações de treino.");
 
                 var listaJsonVariacaoDeTreinos = variacaoDeTreinos
                     .EnumerateArray()
@@ -52,7 +53,7 @@ namespace api_gym_ai.Facades
             var variacaoTemExercicios = json.TryGetProperty("exercicio", out var exercicios);
 
             if (!variacaoTemNome || !variacaoTemMusculos || !variacaoTemExercicios)
-                throw new Exception("Dados de treino proposto ou descrição ausentes.");
+                throw new JsonChatException("Dados de treino proposto ou descrição ausentes.");
 
             var exerciciosPropostos = _exercicioAdapter.ListarExerciciosPropostos(exercicios);
 

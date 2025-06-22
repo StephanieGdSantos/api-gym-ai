@@ -1,3 +1,4 @@
+﻿using api_gym_ai.Exceptions;
 ﻿using api_gym_ai.Interfaces.Adapters;
 using api_gym_ai.Interfaces.Services;
 using api_gym_ai.Models;
@@ -28,7 +29,7 @@ namespace api_gym_ai.Adapters
             }
             catch (JsonException ex)
             {
-                throw new JsonException("Erro ao processar o JSON da resposta.", ex);
+                throw new JsonChatException("Erro ao processar o JSON da resposta.", ex);
             }
             catch (Exception ex)
             {

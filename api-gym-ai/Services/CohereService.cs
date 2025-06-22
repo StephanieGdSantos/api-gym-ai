@@ -3,6 +3,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using api_gym_ai.Exceptions;
 using api_gym_ai.Interfaces.Services;
 
 namespace api_gym_ai.Services;
@@ -62,7 +63,7 @@ public class CohereService : ICohereService
         }
         catch (JsonException ex)
         {
-            throw new ApplicationException($"Erro ao processar a resposta da API Cohere: {ex.Message}");
+            throw new JsonChatException($"Erro ao processar a resposta da API Cohere: {ex.Message}");
         }
         catch (Exception ex)
         {

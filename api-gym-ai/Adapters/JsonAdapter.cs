@@ -1,3 +1,4 @@
+﻿using api_gym_ai.Exceptions;
 ﻿using api_gym_ai.Interfaces.Adapters;
 using api_gym_ai.Models;
 using System.Text.Json;
@@ -17,16 +18,16 @@ namespace api_gym_ai.Adapters
                 throw new JsonException("Propriedade 'message' não encontrada no JSON.");
 
             if (!message.TryGetProperty("content", out var content))
-                throw new JsonException("Propriedade 'content' não encontrada em 'message'.");
+                throw new JsonChatException("Propriedade 'content' não encontrada em 'message'.");
 
             if (content.ValueKind != JsonValueKind.Array)
-                throw new JsonException("A propriedade 'content' não é um array.");
+                throw new JsonChatException("A propriedade 'content' não é um array.");
 
             if (content.GetArrayLength() == 0)
-                throw new JsonException("O array 'content' está vazio.");
+                throw new JsonChatException("O array 'content' está vazio.");
 
             if (!content[0].TryGetProperty("text", out var text))
-                throw new JsonException("Propriedade 'text' não encontrada no primeiro elemento de 'content'.");
+                throw new JsonChatException("Propriedade 'text' não encontrada no primeiro elemento de 'content'.");
 
             return text.GetString();
         }

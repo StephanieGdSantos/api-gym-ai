@@ -6,10 +6,13 @@ namespace api_gym_ai.Builders
 {
     public class PromptBuilder : IPromptBuilder
     {
+        private const int _quantidadeMinimaDeExercicios = 4;
+        private const int _quantidadeMaximaDeExercicios = 12;
         private string _basePrompt { get; set; } = "Haja como um personal trainer profissional. Considere as " +
             "seguintes informações do aluno: [informações]. Monte um plano de treino de academia no formato de " +
-            "variação indicado no campo 'variacaoTreino' (ABC, ABCD ou ABCDE). Cada treino deve conter entre 4 e " +
-            "8 exercícios, com duração aproximada de 'tempoDeTreino' por dia. Quanto mais treinos, mais isolados " +
+            "variação indicado no campo 'variacaoTreino' (ABC, ABCD ou ABCDE). Cada treino deve conter entre " +
+            $"{_quantidadeMinimaDeExercicios} e {_quantidadeMaximaDeExercicios} exercícios, com duração aproximada " +
+            "de 'tempoDeTreino' por dia. Quanto mais treinos, mais isolados " +
             "e específicos devem ser os grupos musculares por dia.\r\n\r\nPara cada exercício, informe:\r\n\r\n" +
             "nome do exercício\r\n\r\nnúmero de séries\r\n\r\nnúmero de repetições\r\n\r\nmúsculos alvo " +
             "(ex: “bíceps braquial”, “peitoral superior”, “glúteo máximo”)\r\n\r\nSua resposta deve ser um JSON " +

@@ -7,8 +7,10 @@ namespace api_gym_ai.Models
     {
         [JsonPropertyName("variacaoDeTreino")]
         public List<VariacaoDeTreino> VariacaoDeTreino { get; set; }
+
         [JsonPropertyName("dataInicio")]
         public string DataInicio { get; set; }
+
         [JsonPropertyName("dataFim")]
         public string DataFim { get; set; }
     }

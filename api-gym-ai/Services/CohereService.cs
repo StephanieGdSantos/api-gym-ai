@@ -2,9 +2,11 @@
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using api_gym_ai.Exceptions;
 using api_gym_ai.Interfaces.Services;
+using api_gym_ai.Models;
 
 namespace api_gym_ai.Services;
 public class CohereService : ICohereService
@@ -47,13 +49,6 @@ public class CohereService : ICohereService
             }
 
             var responseBody = await response.Content.ReadAsStringAsync();
-
-            var jsonResponse = JsonSerializer.Deserialize<JsonElement>(responseBody);
-            if (!jsonResponse.TryGetProperty("message", out var message) ||
-                !message.TryGetProperty("content", out var contentProperty))
-            {
-                throw new ApplicationException("Resposta inválida da API Cohere: JSON não contém as propriedades esperadas.");
-            }
 
             return responseBody;
         }

@@ -17,12 +17,12 @@ namespace api_gym_ai.Builders
             _treino.VariacaoDeTreino.Add(variacaoDeTreino);
             return this;
         }
-        public ITreinoBuilder ComDataInicio(DateTime dataInicio)
+        public ITreinoBuilder ComDataInicio(string dataInicio)
         {
             _treino.DataInicio = dataInicio;
             return this;
         }
-        public ITreinoBuilder ComDataFim(DateTime dataFim)
+        public ITreinoBuilder ComDataFim(string dataFim)
         {
             _treino.DataFim = dataFim;
             return this;

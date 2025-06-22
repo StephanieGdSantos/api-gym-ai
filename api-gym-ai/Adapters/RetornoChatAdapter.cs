@@ -1,5 +1,5 @@
 ﻿using api_gym_ai.Exceptions;
-﻿using api_gym_ai.Interfaces.Adapters;
+using api_gym_ai.Interfaces.Adapters;
 using api_gym_ai.Interfaces.Services;
 using api_gym_ai.Models;
 using System.Text.Json;
@@ -21,9 +21,16 @@ namespace api_gym_ai.Adapters
         {
             try
             {
-                var response = await _cohereService.ChatAsync(prompt.Mensagem);
+                var retornoDoChat = await _cohereService.ChatAsync(prompt.Mensagem);
 
-                var retornoChat = FormatarRetornoDoChat(response);
+                var jsonRetornoDoChat = JsonSerializer.Deserialize<RetornoChat>(retornoDoChat);
+
+                if (jsonRetornoDoChat == null || jsonRetornoDoChat.message == null || !jsonRetornoDoChat.message.content.Any())
+                    throw new JsonChatException("Resposta do chat inválida ou vazia.");
+
+                var textoMensagemChat = jsonRetornoDoChat.message.content.First().text;
+
+                var retornoChat = FormatarRetornoDoChat(textoMensagemChat);
 
                 return retornoChat;
             }
@@ -37,11 +44,9 @@ namespace api_gym_ai.Adapters
             }
         }
 
-        private string FormatarRetornoDoChat(string retorno)
+        private string FormatarRetornoDoChat(string mensagemChat)
         {
-            var respostaChat = _jsonAdapter.ExtrairMensagemDoChat(retorno);
-
-            return respostaChat
+            return mensagemChat
                 .Replace("\n", " ")
                 .Replace("\r", " ")
                 .Trim();

@@ -10,10 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<ITreinoAdapter, TreinoAdapter>();
 builder.Services.AddScoped<IPromptAdapter, PromptAdapter>();
-builder.Services.AddScoped<IVariacaoDeTreinoAdapter, VariacaoDeTreinoAdapter>();
-builder.Services.AddScoped<IExercicioAdapter, ExercicioAdapter>();
 builder.Services.AddScoped<ICohereService, CohereService>();
-builder.Services.AddScoped<IExercicioBuilder, ExercicioBuilder>();
 builder.Services.AddScoped<ITreinoBuilder, TreinoBuilder>();
 builder.Services.AddScoped<IPromptBuilder, PromptBuilder>();
 builder.Services.AddScoped<IRetornoChatAdapter, RetornoChatAdapter>();

@@ -2,6 +2,8 @@
 using api_gym_ai.Interfaces.Adapters;
 using api_gym_ai.Interfaces.Builders;
 using api_gym_ai.Models;
+using System.Globalization;
+using System.Text.Json;
 
 namespace api_gym_ai.Facades
 {
@@ -9,35 +11,36 @@ namespace api_gym_ai.Facades
     {
         private readonly IPromptAdapter _promptAdapter;
         private readonly IRetornoChatAdapter _retornoChatAdapter;
-        private readonly IVariacaoDeTreinoAdapter _variacaoDeTreinoAdapter;
         private readonly ITreinoBuilder _treinoBuilder;
 
-        public TreinoAdapter(IPromptAdapter promptAdapter, IRetornoChatAdapter retornoChatAdapter, IVariacaoDeTreinoAdapter variacaoDeTreinoAdapter, ITreinoBuilder treinoBuilder)
+        public TreinoAdapter(IPromptAdapter promptAdapter, IRetornoChatAdapter retornoChatAdapter, ITreinoBuilder treinoBuilder)
         {
             _promptAdapter = promptAdapter;
             _retornoChatAdapter = retornoChatAdapter;
-            _variacaoDeTreinoAdapter = variacaoDeTreinoAdapter;
             _treinoBuilder = treinoBuilder;
         }
 
         public async Task<Treino?> MontarTreino(Pessoa pessoa)
         {
             var prompt = _promptAdapter.ConstruirPrompt(pessoa);
-            var treinoProposto = await _retornoChatAdapter.ExtrairRespostaDoChat(prompt);
 
-            var variacaoDeTreino = _variacaoDeTreinoAdapter.ListarVariacaoDeTreinos(treinoProposto);
-            var quantidadeVariacoes = variacaoDeTreino.Count;
+            var retornoChat = await _retornoChatAdapter.ExtrairRespostaDoChat(prompt);
 
-            var estimativaDeDuracaoEmDias = 120;
+            var treinoProposto = JsonSerializer.Deserialize<Treino>(retornoChat);
 
-            variacaoDeTreino.ForEach(variacao =>
+            treinoProposto.VariacaoDeTreino.ForEach(variacao =>
             {
                 _treinoBuilder.ComVariacao(variacao);
             });
 
+            var formatoDeData = CultureInfo.GetCultureInfo("pt-BR").DateTimeFormat;
+            var estimativaDeDuracaoEmDias = 120;
+            var dataInicio = DateTime.Now.Date;
+            var dataFim = dataInicio.AddDays(estimativaDeDuracaoEmDias);
+
             return _treinoBuilder
-                .ComDataInicio(DateTime.Now)
-                .ComDataFim(DateTime.Now.AddDays(estimativaDeDuracaoEmDias))
+                .ComDataInicio(dataInicio.ToString(formatoDeData))
+                .ComDataFim(dataFim.ToString(formatoDeData))
                 .Build();
         }
     }

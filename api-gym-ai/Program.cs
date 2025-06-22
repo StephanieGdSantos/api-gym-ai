@@ -1,3 +1,4 @@
+using api_gym_ai.Adapters;
 using api_gym_ai.Builders;
 using api_gym_ai.Facades;
 using api_gym_ai.Interfaces.Adapters;
@@ -15,6 +16,8 @@ builder.Services.AddScoped<ICohereService, CohereService>();
 builder.Services.AddScoped<IExercicioBuilder, ExercicioBuilder>();
 builder.Services.AddScoped<ITreinoBuilder, TreinoBuilder>();
 builder.Services.AddScoped<IPromptBuilder, PromptBuilder>();
+builder.Services.AddScoped<IRetornoChatAdapter, RetornoChatAdapter>();
+builder.Services.AddSingleton<IJsonAdapter, JsonAdapter>();
 
 
 builder.Services.AddControllers();

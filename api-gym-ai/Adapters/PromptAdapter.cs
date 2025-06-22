@@ -1,10 +1,6 @@
-﻿using api_gym_ai.Builders;
-using api_gym_ai.Interfaces.Adapters;
+﻿using api_gym_ai.Interfaces.Adapters;
 using api_gym_ai.Interfaces.Builders;
-using api_gym_ai.Interfaces.Services;
 using api_gym_ai.Models;
-using api_gym_ai.Services;
-using System.Text.Json;
 
 namespace api_gym_ai.Facades
 {

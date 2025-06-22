@@ -3,7 +3,6 @@ using api_gym_ai.Interfaces.Adapters;
 using api_gym_ai.Interfaces.Builders;
 using api_gym_ai.Models;
 using System.Globalization;
-using System.Text.Json;
 
 namespace api_gym_ai.Facades
 {

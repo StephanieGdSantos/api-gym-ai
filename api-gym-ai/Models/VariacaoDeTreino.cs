@@ -12,7 +12,7 @@ namespace api_gym_ai.Models
         [JsonPropertyName("musculosTrabalhados")]
         public IEnumerable<string> MusculosTrabalhados { get; set; }
 
-        [JsonPropertyName("exercicio")]
+        [JsonPropertyName("exercicios")]
         public IEnumerable<Exercicio> Exercicio { get; set; }
     }
 }

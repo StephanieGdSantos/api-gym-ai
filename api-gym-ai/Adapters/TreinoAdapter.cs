@@ -1,7 +1,7 @@
-﻿using api_gym_ai.Builders;
-using api_gym_ai.Interfaces.Adapters;
+﻿using api_gym_ai.Interfaces.Adapters;
 using api_gym_ai.Interfaces.Builders;
 using api_gym_ai.Models;
+using api_gym_ai.Utils;
 using System.Globalization;
 
 namespace api_gym_ai.Facades
@@ -25,7 +25,7 @@ namespace api_gym_ai.Facades
 
             var retornoChat = await _retornoChatAdapter.ExtrairRespostaDoChat(prompt);
 
-            var treinoProposto = JsonSerializer.Deserialize<Treino>(retornoChat);
+            var treinoProposto = JsonUtils.DeserializeOrThrow<Treino>(retornoChat, nameof(Treino));
 
             treinoProposto.VariacaoDeTreino.ForEach(variacao =>
             {

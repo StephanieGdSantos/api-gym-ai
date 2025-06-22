@@ -9,53 +9,13 @@ namespace api_gym_ai.Test;
 
 public class PromptAdapterTestes
 {
-    private readonly Mock<ICohereService> _mockServicoCohere;
     private readonly Mock<IPromptBuilder> _mockPromptBuilder;
     private readonly PromptAdapter _adaptadorPrompt;
 
     public PromptAdapterTestes()
     {
-        _mockServicoCohere = new Mock<ICohereService>();
         _mockPromptBuilder = new Mock<IPromptBuilder>();
-        _adaptadorPrompt = new PromptAdapter(_mockServicoCohere.Object, _mockPromptBuilder.Object);
-    }
-
-    [Fact]
-    public async Task ExtrairRespostaDoChat_DeveRetornarResposta_QuandoRespostaForValida()
-    {
-        // Arrange
-        var prompt = new Prompt { Mensagem = "Mensagem de teste" };
-        var respostaValidaJson = "{\"message\":{\"content\":[{\"text\":\"Resposta válida\"}]}}";
-        _mockServicoCohere.Setup(s => s.ChatAsync(prompt.Mensagem)).ReturnsAsync(respostaValidaJson);
-
-        // Act
-        var resultado = await _adaptadorPrompt.ExtrairRespostaDoChat(prompt);
-
-        // Assert
-        Assert.Equal("Resposta válida", resultado);
-    }
-
-    [Fact]
-    public async Task ExtrairRespostaDoChat_DeveLancarExcecao_QuandoRespostaEstiverVazia()
-    {
-        // Arrange
-        var prompt = new Prompt { Mensagem = "Mensagem de teste" };
-        _mockServicoCohere.Setup(s => s.ChatAsync(prompt.Mensagem)).ReturnsAsync(string.Empty);
-
-        // Act & Assert
-        await Assert.ThrowsAsync<Exception>(() => _adaptadorPrompt.ExtrairRespostaDoChat(prompt));
-    }
-
-    [Fact]
-    public async Task ExtrairRespostaDoChat_DeveLancarExcecao_QuandoJsonForInvalido()
-    {
-        // Arrange
-        var prompt = new Prompt { Mensagem = "Mensagem de teste" };
-        var respostaJsonInvalida = "{\"invalido\":\"json\"}";
-        _mockServicoCohere.Setup(s => s.ChatAsync(prompt.Mensagem)).ReturnsAsync(respostaJsonInvalida);
-
-        // Act & Assert
-        await Assert.ThrowsAsync<JsonException>(() => _adaptadorPrompt.ExtrairRespostaDoChat(prompt));
+        _adaptadorPrompt = new PromptAdapter(_mockPromptBuilder.Object);
     }
 
     [Fact]

@@ -8,7 +8,7 @@ public class ValidarPessoaAttribute : ActionFilterAttribute
     {
         if (context.ActionArguments.TryGetValue("pessoa", out var pessoaObj) && pessoaObj is Pessoa pessoa)
         {
-            if (pessoa.InfoCorporais == null || pessoa.Objetivo == null)
+            if (pessoa.InfoCorporais == null || pessoa.InfoPreferencias == null)
             {
                 context.Result = new BadRequestObjectResult("As informações do usuário não podem ser nulas.");
             }

@@ -10,47 +10,11 @@ namespace api_gym_ai.Facades
 {
     public class PromptAdapter : IPromptAdapter
     {
-        private readonly ICohereService _cohereService;
         private readonly IPromptBuilder _promptBuilder;
 
-        public PromptAdapter(ICohereService cohereService, IPromptBuilder promptBuilder)
+        public PromptAdapter(IPromptBuilder promptBuilder)
         {
-            _cohereService = cohereService;
             _promptBuilder = promptBuilder;
-        }
-
-        public async Task<string> ExtrairRespostaDoChat(Prompt prompt)
-        {
-            try
-            {
-                var response = await _cohereService.ChatAsync(prompt.Mensagem);
-
-                if (string.IsNullOrWhiteSpace(response))
-                {
-                    throw new Exception("A resposta do serviço está vazia.");
-                }
-
-                var jsonResponse = JsonSerializer.Deserialize<JsonElement>(response);
-
-                if (!jsonResponse.TryGetProperty("message", out var message) ||
-                    !message.TryGetProperty("content", out var content) ||
-                    content.ValueKind != JsonValueKind.Array ||
-                    content.GetArrayLength() == 0 ||
-                    !content[0].TryGetProperty("text", out var text))
-                {
-                    throw new JsonException("O JSON não contém as propriedades esperadas.");
-                }
-
-                return text.GetString();
-            }
-            catch (JsonException ex)
-            {
-                throw new JsonException("Erro ao processar o JSON da resposta.", ex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Erro ao extrair a resposta do chat.", ex);
-            }
         }
 
         public Prompt ConstruirPrompt(Pessoa pessoa)

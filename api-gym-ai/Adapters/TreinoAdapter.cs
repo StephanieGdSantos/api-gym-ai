@@ -20,10 +20,10 @@ namespace api_gym_ai.Facades
 
         public async Task<Treino?> MontarTreino(Pessoa pessoa)
         {
-            var promptFinal = _promptAdapter.ConstruirPrompt(pessoa);
-            var treinoProposto = await _promptAdapter.ExtrairRespostaDoChat(promptFinal);
-            var variacaoDeTreino = _variacaoDeTreinoAdapter.ListarVariacaoDeTreinos(treinoProposto);
+            var prompt = _promptAdapter.ConstruirPrompt(pessoa);
+            var treinoProposto = await _retornoChatAdapter.ExtrairRespostaDoChat(prompt);
 
+            var variacaoDeTreino = _variacaoDeTreinoAdapter.ListarVariacaoDeTreinos(treinoProposto);
             var quantidadeVariacoes = variacaoDeTreino.Count;
 
             switch (quantidadeVariacoes)

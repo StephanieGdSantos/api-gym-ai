@@ -14,54 +14,43 @@ namespace api_gym_ai.Facades
             _exercicioBuilder = exercicioBuilder;
         }
 
-        public List<Exercicio> ListarExerciciosPropostos(string treinoProposto)
+        public List<Exercicio> ListarExerciciosPropostos(JsonElement jsonExercicios)
         {
-            var exercicios = treinoProposto
-                .Split(new[] { "_" }, StringSplitOptions.RemoveEmptyEntries)
-                .ToList();
-
             var listaExercicios = new List<Exercicio>();
 
-            exercicios.ForEach(exercicio =>
+            foreach (var exercicio in jsonExercicios.EnumerateArray())
             {
-                var partes = exercicio
-                    .Split([','], StringSplitOptions.RemoveEmptyEntries);
+                var novoExercicio = ExtrairExercicio(exercicio);
 
-                if (partes.Length == 3)
-                {
-                    var nomeExercicio = partes[0]
-                        .Trim();
-
-                    var numeroRepeticoes = partes[1]
-                        .Split("x");
-
-                    var series = int.Parse(numeroRepeticoes[0]
-                        .Trim());
-
-                    var repeticoes = numeroRepeticoes[1]
-                        .Trim();
-
-                    var musculosAlvo = partes[2]
-                        .Trim()
-                        .Split(" ");
-
-                    var novoExercicio = ConstruirExercicio(nomeExercicio, series, repeticoes, musculosAlvo);
-
-                    listaExercicios.Add(novoExercicio);
-                }
-            });
-
+                listaExercicios.Add(novoExercicio);
+            }
             return listaExercicios;
         }
 
-        public Exercicio ConstruirExercicio(string nome, int series, string repeticoes, IEnumerable<string> musculosAlvo)
+        public Exercicio ExtrairExercicio(JsonElement json)
         {
-            return _exercicioBuilder
-                .ComNome(nome)
-                .ComSeries(series)
-                .ComRepeticoes(repeticoes)
-                .ComMusculosAlvo(musculosAlvo)
+            var exercicioTemNome = json.TryGetProperty("nome", out var nome);
+            var exercicioTemSeries = json.TryGetProperty("series", out var series);
+            var exercicioTemRepeticoes = json.TryGetProperty("repeticoes", out var repeticoes);
+            var exercicioTemMusculosAlvo = json.TryGetProperty("musculoAlvo", out var musculosAlvo);
+
+            if (!exercicioTemNome || !exercicioTemSeries || !exercicioTemRepeticoes || !exercicioTemMusculosAlvo)
+                throw new Exception("Dados de exercício proposto ou descrição ausentes.");
+
+            var listaMusculosAlvo = musculosAlvo
+                .EnumerateArray()
+                .Select(m => m.GetString() ?? string.Empty)
+                .Where(m => !string.IsNullOrWhiteSpace(m))
+                .ToList();
+
+            var exercicio = _exercicioBuilder
+                .ComNome(nome.GetString() ?? string.Empty)
+                .ComSeries(series.GetInt32())
+                .ComRepeticoes(repeticoes.GetString() ?? string.Empty)
+                .ComMusculosAlvo(listaMusculosAlvo)
                 .Build();
+
+            return exercicio;
         }
     }
 }

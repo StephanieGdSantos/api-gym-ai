@@ -1,4 +1,3 @@
-﻿using api_gym_ai.Builders;
 using System.Text.Json.Serialization;
 
 namespace api_gym_ai.Models
@@ -16,17 +15,5 @@ namespace api_gym_ai.Models
 
         [JsonPropertyName("musculoAlvo")]
         public IEnumerable<string>? MusculoAlvo { get; set; }
-
-        public Exercicio()
-        {
-        }
-
-        public Exercicio(string nome, int series, string repeticoes, IEnumerable<string>? musculoAlvo)
-        {
-            Nome = nome;
-            Series = series;
-            Repeticoes = repeticoes;
-            MusculoAlvo = musculoAlvo;
-        }
     }
 }

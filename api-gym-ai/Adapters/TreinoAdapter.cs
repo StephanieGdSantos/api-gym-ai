@@ -1,6 +1,8 @@
-﻿using api_gym_ai.Interfaces.Adapters;
+﻿using api_gym_ai.Adapters;
+using api_gym_ai.Interfaces.Adapters;
 using api_gym_ai.Interfaces.Builders;
 using api_gym_ai.Models;
+using api_gym_ai.Services;
 using api_gym_ai.Utils;
 using System.Globalization;
 

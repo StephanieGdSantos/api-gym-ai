@@ -15,7 +15,6 @@ builder.Services.AddScoped<ITreinoBuilder, TreinoBuilder>();
 builder.Services.AddScoped<IPromptBuilder, PromptBuilder>();
 builder.Services.AddScoped<IRetornoChatAdapter, RetornoChatAdapter>();
 
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

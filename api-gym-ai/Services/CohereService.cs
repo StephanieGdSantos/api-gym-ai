@@ -1,12 +1,7 @@
-﻿using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
-using api_gym_ai.Exceptions;
 using api_gym_ai.Interfaces.Services;
-using api_gym_ai.Models;
 
 namespace api_gym_ai.Services;
 public class CohereService : ICohereService

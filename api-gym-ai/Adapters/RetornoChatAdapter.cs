@@ -1,5 +1,4 @@
-﻿using api_gym_ai.Exceptions;
-using api_gym_ai.Interfaces.Adapters;
+﻿using api_gym_ai.Interfaces.Adapters;
 using api_gym_ai.Interfaces.Services;
 using api_gym_ai.Models;
 using System.Text.Json;
@@ -9,12 +8,10 @@ namespace api_gym_ai.Adapters
     public class RetornoChatAdapter : IRetornoChatAdapter
     {
         private readonly ICohereService _cohereService;
-        private readonly IJsonAdapter _jsonAdapter;
 
         public RetornoChatAdapter(ICohereService cohereService)
         {
             _cohereService = cohereService;
-            _jsonAdapter = jsonAdapter;
         }
 
         public async Task<string> ExtrairRespostaDoChat(Prompt prompt)

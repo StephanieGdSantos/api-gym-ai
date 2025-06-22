@@ -53,7 +53,7 @@ public class CohereService : ICohereService
         }
         catch (JsonException ex)
         {
-            throw new JsonChatException($"Erro ao processar a resposta da API Cohere: {ex.Message}");
+            throw new JsonException($"Erro ao processar a resposta da API Cohere: {ex.Message}");
         }
         catch (Exception ex)
         {

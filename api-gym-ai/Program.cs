@@ -14,7 +14,6 @@ builder.Services.AddScoped<ICohereService, CohereService>();
 builder.Services.AddScoped<ITreinoBuilder, TreinoBuilder>();
 builder.Services.AddScoped<IPromptBuilder, PromptBuilder>();
 builder.Services.AddScoped<IRetornoChatAdapter, RetornoChatAdapter>();
-builder.Services.AddSingleton<IJsonAdapter, JsonAdapter>();
 
 
 builder.Services.AddControllers();

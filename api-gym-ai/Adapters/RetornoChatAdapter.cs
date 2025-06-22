@@ -11,7 +11,7 @@ namespace api_gym_ai.Adapters
         private readonly ICohereService _cohereService;
         private readonly IJsonAdapter _jsonAdapter;
 
-        public RetornoChatAdapter(ICohereService cohereService, IJsonAdapter jsonAdapter)
+        public RetornoChatAdapter(ICohereService cohereService)
         {
             _cohereService = cohereService;
             _jsonAdapter = jsonAdapter;
@@ -26,7 +26,7 @@ namespace api_gym_ai.Adapters
                 var jsonRetornoDoChat = JsonSerializer.Deserialize<RetornoChat>(retornoDoChat);
 
                 if (jsonRetornoDoChat == null || jsonRetornoDoChat.message == null || !jsonRetornoDoChat.message.content.Any())
-                    throw new JsonChatException("Resposta do chat inválida ou vazia.");
+                    throw new Exception("Resposta do chat inválida ou vazia.");
 
                 var textoMensagemChat = jsonRetornoDoChat.message.content.First().text;
 
@@ -36,7 +36,7 @@ namespace api_gym_ai.Adapters
             }
             catch (JsonException ex)
             {
-                throw new JsonChatException("Erro ao processar o JSON da resposta.", ex);
+                throw new JsonException("Erro ao processar o JSON da resposta.", ex);
             }
             catch (Exception ex)
             {

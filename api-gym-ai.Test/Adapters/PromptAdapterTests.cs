@@ -4,6 +4,7 @@ using api_gym_ai.Interfaces.Services;
 using api_gym_ai.Models;
 using Moq;
 using System.Text.Json;
+using static api_gym_ai.Models.InfoPreferencias;
 
 namespace api_gym_ai.Test;
 
@@ -22,6 +23,12 @@ public class PromptAdapterTestes
     public void ConstruirPrompt_DeveRetornarPrompt_QuandoPessoaForValida()
     {
         // Arrange
+        var enumObjetivo = It.IsAny<EnumObjetivo>();
+        var enumPartesDoCorpoEmFoco = new List<EnumPartesDoCorpoEmFoco>
+        {
+            It.IsAny<EnumPartesDoCorpoEmFoco>()
+        };
+
         var pessoa = new Pessoa
         {
             Idade = 30,
@@ -35,11 +42,11 @@ public class PromptAdapterTestes
             },
             InfoPreferencias = new InfoPreferencias
             {
-                PartesDoCorpoEmFoco = new[] { "Braços", "Pernas" },
-                Objetivo = "Perder peso",
-                TempoDeTreino = 45,
+                PartesDoCorpoEmFoco = enumPartesDoCorpoEmFoco,
+                Objetivo = enumObjetivo,
+                TempoDeTreinoEmMinutos = 45,
                 VariacaoTreino = "Alta",
-                VariacaoMuscular = "Baixa"
+                Observacao = "Baixa"
             }
         };
 
@@ -52,9 +59,9 @@ public class PromptAdapterTestes
         _mockPromptBuilder.Setup(b => b.ComLimitacoes("Lesão no joelho")).Returns(_mockPromptBuilder.Object);
         _mockPromptBuilder.Setup(b => b.ComPartesDoCorpoEmFoco("Braços, Pernas")).Returns(_mockPromptBuilder.Object);
         _mockPromptBuilder.Setup(b => b.ComObjetivo("Perder peso")).Returns(_mockPromptBuilder.Object);
-        _mockPromptBuilder.Setup(b => b.ComTempoDeTreino("45")).Returns(_mockPromptBuilder.Object);
+        _mockPromptBuilder.Setup(b => b.ComTempoDeTreinoEmMinutos("45")).Returns(_mockPromptBuilder.Object);
         _mockPromptBuilder.Setup(b => b.ComVariacaoDeTreino("Alta")).Returns(_mockPromptBuilder.Object);
-        _mockPromptBuilder.Setup(b => b.ComVariacaoMuscular("Baixa")).Returns(_mockPromptBuilder.Object);
+        _mockPromptBuilder.Setup(b => b.ComObservacao("Baixa")).Returns(_mockPromptBuilder.Object);
         _mockPromptBuilder.Setup(b => b.Build()).Returns(promptEsperado);
 
         // Act

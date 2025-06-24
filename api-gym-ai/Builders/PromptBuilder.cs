@@ -1,6 +1,7 @@
 ﻿using api_gym_ai.Interfaces.Builders;
 using api_gym_ai.Models;
 using System.Numerics;
+using static api_gym_ai.Models.InfoPreferencias;
 
 namespace api_gym_ai.Builders
 {
@@ -18,7 +19,7 @@ namespace api_gym_ai.Builders
             "(ex: “bíceps braquial”, “peitoral superior”, “glúteo máximo”)\r\n\r\nSua resposta deve ser um JSON " +
             "válido, no formato exato abaixo. Não adicione comentários, explicações, formatação markdown, nem texto " +
             "adicional. Apenas o JSON. json {\"variacaoDeTreino\": [{\"dia\": \"TREINO A\",\"musculosTrabalhados\": " +
-            "[\"peitoral\", \"tríceps\"],\"exercicio\": [{\"nome\": \"supino reto com barra\", \"series\": 4, " +
+            "[\"peitoral\", \"tríceps\"],\"exercicios\": [{\"nome\": \"supino reto com barra\", \"series\": 4, " +
             "\"repeticoes\": \"10-12\", \"musculoAlvo\": [\"peitoral médio\", \"tríceps medial\" ]} " +
             "// demais exercícios ]}// TREINO B, C, etc.], \"dataInicio\": \"dd/mm/yyyy\", \"dataFim\": \"dd/mm/yyyy]\"}";
 
@@ -90,7 +91,7 @@ namespace api_gym_ai.Builders
             return this;
         }
 
-        public IPromptBuilder ComTempoDeTreino(string tempoDeTreino)
+        public IPromptBuilder ComTempoDeTreinoEmMinutos(string tempoDeTreino)
         {
             _informacoes += $"Tempo de Treino: {tempoDeTreino} minutos para cada variação, ";
 
@@ -104,10 +105,16 @@ namespace api_gym_ai.Builders
             return this;
         }
 
-        public IPromptBuilder ComVariacaoMuscular(string variacaoMuscular)
+        public IPromptBuilder ComObservacao(string variacaoMuscular)
         {
             _informacoes += $"Variação Muscular: {variacaoMuscular}, ";
 
+            return this;
+        }
+
+        public IPromptBuilder ComNivel(string nivel)
+        {
+            _informacoes += $"Nível: {nivel}, ";
             return this;
         }
 

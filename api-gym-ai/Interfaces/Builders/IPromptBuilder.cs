@@ -1,4 +1,5 @@
 ﻿using api_gym_ai.Models;
+using static api_gym_ai.Models.InfoPreferencias;
 
 namespace api_gym_ai.Interfaces.Builders
 {
@@ -9,7 +10,7 @@ namespace api_gym_ai.Interfaces.Builders
         /// </summary>
 
         public IPromptBuilder ComObjetivo(string objetivo);
-        public IPromptBuilder ComTempoDeTreino(string tempoDeTreino);
+        public IPromptBuilder ComTempoDeTreinoEmMinutos(string tempoDeTreino);
         public IPromptBuilder ComPartesDoCorpoEmFoco(string partesDoCorpoEmFoco);
         public IPromptBuilder ComLimitacoes(string? limitacoes);
         public IPromptBuilder ComSexo(string? sexo);
@@ -19,7 +20,8 @@ namespace api_gym_ai.Interfaces.Builders
         public IPromptBuilder ComMassaMuscular(string? massaMuscular);
         public IPromptBuilder ComPercentualDeGordura(string? percentualGordura);
         public IPromptBuilder ComVariacaoDeTreino(string variacao);
-        public IPromptBuilder ComVariacaoMuscular(string variacaoMuscular);
+        public IPromptBuilder ComObservacao(string variacaoMuscular);
+        public IPromptBuilder ComNivel(string nivel);
         public Prompt Build();
     }
 }

@@ -15,13 +15,13 @@ namespace api_gym_ai.Models
 
         [Required(ErrorMessage = "O tempo de treino é obrigatório.")]
         [Range(TempoDeTreinoMin, TempoDeTreinoMax, ErrorMessage = "O tempo de treino deve ser de 20 minutos a 4 horas.")]
-        public double TempoDeTreino { get; set; }
+        public double TempoDeTreinoEmMinutos { get; set; }
 
         [Required(ErrorMessage = "A variação de treino é obrigatória.")]
         public string VariacaoTreino { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "A variação muscular do treino é obrigatória.")]
-        public string VariacaoMuscular { get; set; } = string.Empty;
+        public string Observacao { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "O nível de treino é obrigatório.")]
         public EnumNivel Nivel { get; set; }

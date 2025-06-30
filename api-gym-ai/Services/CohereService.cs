@@ -2,19 +2,19 @@
 using System.Text;
 using System.Text.Json;
 using api_gym_ai.Interfaces.Services;
+using api_gym_ai.Options;
+using Microsoft.Extensions.Options;
 
 namespace api_gym_ai.Services;
 public class CohereService : ICohereService
 {
     private readonly HttpClient _httpClient;
-    private string _apiKey;
-    private const string _url = "https://api.cohere.com/v2/chat";
+    private readonly CohereServiceOptions _cohereServiceOptions;
 
-    public CohereService(HttpClient httpClient)
+    public CohereService(HttpClient httpClient, IOptions<CohereServiceOptions> cohereServiceOptions)
     {
         _httpClient = httpClient;
-
-        _apiKey = Environment.GetEnvironmentVariable("COHERE_API_KEY") ?? throw new ApplicationException("Chave da API não encontrada.");
+        _cohereServiceOptions = cohereServiceOptions.Value;
     }
 
     public async Task<string> ChatAsync(string prompt)
@@ -31,11 +31,11 @@ public class CohereService : ICohereService
 
         var content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
 
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _cohereServiceOptions.ApiKey);
 
         try
         {
-            var response = await _httpClient.PostAsync(_url, content);
+            var response = await _httpClient.PostAsync(_cohereServiceOptions.BaseUrl, content);
 
             if (!response.IsSuccessStatusCode)
             {

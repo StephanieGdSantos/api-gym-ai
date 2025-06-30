@@ -19,38 +19,36 @@ namespace api_gym_ai.Models
 
         [Required(ErrorMessage = "A variação de treino é obrigatória.")]
         public string VariacaoTreino { get; set; } = string.Empty;
-
-        [Required(ErrorMessage = "A variação muscular do treino é obrigatória.")]
         public string Observacao { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "O nível de treino é obrigatório.")]
-        public EnumNivel Nivel { get; set; }
+        public EnumNivelCondicionamento Nivel { get; set; }
 
         public enum EnumPartesDoCorpoEmFoco
         {
             Peito,
             Costas,
             Ombros,
-            Braços,
+            Bracos,
             Pernas,
-            Abdômen,
+            Abdomen,
         }
 
         public enum EnumObjetivo
         {
             Emagrecimento,
             Hipertrofia,
-            DefiniçãoMuscular,
-            Resistência,
-            Força,
+            DefinicaoMuscular,
+            Resistencia,
+            Forca,
             Flexibilidade
         }
 
-        public enum EnumNivel
+        public enum EnumNivelCondicionamento
         {
             Iniciante,
-            Intermediário,
-            Avançado
+            Intermediario,
+            Avancado
         }
     }
 }

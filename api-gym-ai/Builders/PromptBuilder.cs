@@ -21,7 +21,7 @@ namespace api_gym_ai.Builders
             "adicional. Apenas o JSON. json {\"variacaoDeTreino\": [{\"dia\": \"TREINO A\",\"musculosTrabalhados\": " +
             "[\"peitoral\", \"tríceps\"],\"exercicios\": [{\"nome\": \"supino reto com barra\", \"series\": 4, " +
             "\"repeticoes\": \"10-12\", \"musculoAlvo\": [\"peitoral médio\", \"tríceps medial\" ]} " +
-            "// demais exercícios ]}// TREINO B, C, etc.], \"dataInicio\": \"dd/mm/yyyy\", \"dataFim\": \"dd/mm/yyyy]\"}";
+            "// demais exercícios ]}// TREINO B, C, etc.]}";
 
         private string _informacoes { get; set; } = string.Empty;
 

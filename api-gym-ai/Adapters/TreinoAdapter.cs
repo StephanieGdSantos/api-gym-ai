@@ -39,10 +39,11 @@ namespace api_gym_ai.Facades
             var dataInicio = DateTime.Now.Date;
             var dataFim = dataInicio.AddDays(estimativaDeDuracaoEmDias);
 
-            return _treinoBuilder
-                .ComDataInicio(dataInicio.ToString(formatoDeData))
-                .ComDataFim(dataFim.ToString(formatoDeData))
-                .Build();
+            return new PeriodoTreino
+            {
+                DataInicio = dataInicio.ToString(formatoDeData),
+                DataFim = dataFim.ToString(formatoDeData)
+            };
         }
     }
 }

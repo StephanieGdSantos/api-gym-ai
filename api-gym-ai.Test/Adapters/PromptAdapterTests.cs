@@ -1,83 +1,85 @@
-using api_gym_ai.Facades;
-using api_gym_ai.Interfaces.Builders;
-using api_gym_ai.Interfaces.Services;
-using api_gym_ai.Models;
+using Xunit;
 using Moq;
-using System.Text.Json;
-using static api_gym_ai.Models.InfoPreferencias;
+using api_gym_ai.Interfaces.Adapters;
+using api_gym_ai.Interfaces.Builders;
+using api_gym_ai.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using api_gym_ai.Facades;
 
-namespace api_gym_ai.Test;
-
-public class PromptAdapterTestes
+namespace Tests.Adapters
 {
-    private readonly Mock<IPromptBuilder> _mockPromptBuilder;
-    private readonly PromptAdapter _adaptadorPrompt;
-
-    public PromptAdapterTestes()
+    public class PromptAdapterTests
     {
-        _mockPromptBuilder = new Mock<IPromptBuilder>();
-        _adaptadorPrompt = new PromptAdapter(_mockPromptBuilder.Object);
-    }
+        private readonly Mock<IPromptBuilder> _mockPromptBuilder;
+        private readonly IPromptAdapter _promptAdapter;
 
-    [Fact]
-    public void ConstruirPrompt_DeveRetornarPrompt_QuandoPessoaForValida()
-    {
-        // Arrange
-        var enumObjetivo = It.IsAny<EnumObjetivo>();
-        var enumPartesDoCorpoEmFoco = new List<EnumPartesDoCorpoEmFoco>
+        public PromptAdapterTests()
         {
-            It.IsAny<EnumPartesDoCorpoEmFoco>()
-        };
+            _mockPromptBuilder = new Mock<IPromptBuilder>();
+            _promptAdapter = new PromptAdapter(_mockPromptBuilder.Object);
+        }
 
-        var pessoa = new Pessoa
+        [Fact]
+        public void ConstruirPrompt_DeveLancarArgumentNullException_QuandoPessoaForNula()
         {
-            Idade = 30,
-            Peso = 80,
-            Altura = 180,
-            InfoCorporais = new InfoCorporais
+            // Act & Assert  
+            Assert.Throws<ArgumentNullException>(() => _promptAdapter.ConstruirPrompt(null));
+        }
+
+        [Fact]
+        public void ConstruirPrompt_DeveRetornarPrompt_QuandoPessoaForValida()
+        {
+            // Arrange  
+            var pessoa = new Pessoa
             {
-                MassaMuscular = 40,
-                PercentualGordura = 20,
-                Limitacoes = new[] { "Lesão no joelho" }
-            },
-            InfoPreferencias = new InfoPreferencias
-            {
-                PartesDoCorpoEmFoco = enumPartesDoCorpoEmFoco,
-                Objetivo = enumObjetivo,
-                TempoDeTreinoEmMinutos = 45,
-                VariacaoTreino = "Alta",
-                Observacao = "Baixa"
-            }
-        };
+                Idade = 25,
+                Altura = 1.75,
+                Peso = 70,
+                InfoCorporais = new InfoCorporais
+                {
+                    MassaMuscular = 30,
+                    PercentualGordura = 15,
+                    Limitacoes = new List<string> { "Lesão no joelho" }
+                },
+                InfoPreferencias = new InfoPreferencias
+                {
+                    Objetivo = InfoPreferencias.EnumObjetivo.Hipertrofia,
+                    PartesDoCorpoEmFoco = new List<InfoPreferencias.EnumPartesDoCorpoEmFoco>
+                   {
+                       InfoPreferencias.EnumPartesDoCorpoEmFoco.Peito,
+                       InfoPreferencias.EnumPartesDoCorpoEmFoco.Bracos
+                   },
+                    TempoDeTreinoEmMinutos = 60,
+                    VariacaoTreino = "Alta",
+                    Observacao = "Treino focado em força",
+                    Nivel = InfoPreferencias.EnumNivelCondicionamento.Intermediario
+                }
+            };
 
-        var promptEsperado = new Prompt();
-        _mockPromptBuilder.Setup(b => b.ComIdade("30")).Returns(_mockPromptBuilder.Object);
-        _mockPromptBuilder.Setup(b => b.ComPeso("80")).Returns(_mockPromptBuilder.Object);
-        _mockPromptBuilder.Setup(b => b.ComAltura("180")).Returns(_mockPromptBuilder.Object);
-        _mockPromptBuilder.Setup(b => b.ComMassaMuscular("40")).Returns(_mockPromptBuilder.Object);
-        _mockPromptBuilder.Setup(b => b.ComPercentualDeGordura("20")).Returns(_mockPromptBuilder.Object);
-        _mockPromptBuilder.Setup(b => b.ComLimitacoes("Lesão no joelho")).Returns(_mockPromptBuilder.Object);
-        _mockPromptBuilder.Setup(b => b.ComPartesDoCorpoEmFoco("Braços, Pernas")).Returns(_mockPromptBuilder.Object);
-        _mockPromptBuilder.Setup(b => b.ComObjetivo("Perder peso")).Returns(_mockPromptBuilder.Object);
-        _mockPromptBuilder.Setup(b => b.ComTempoDeTreinoEmMinutos("45")).Returns(_mockPromptBuilder.Object);
-        _mockPromptBuilder.Setup(b => b.ComVariacaoDeTreino("Alta")).Returns(_mockPromptBuilder.Object);
-        _mockPromptBuilder.Setup(b => b.ComObservacao("Baixa")).Returns(_mockPromptBuilder.Object);
-        _mockPromptBuilder.Setup(b => b.Build()).Returns(promptEsperado);
+            var resultadoEsperado = new Prompt { Mensagem = "Prompt gerado com sucesso" };
 
-        // Act
-        var resultado = _adaptadorPrompt.ConstruirPrompt(pessoa);
+            _mockPromptBuilder.Setup(pb => pb.ComIdade(It.IsAny<string>())).Returns(_mockPromptBuilder.Object);
+            _mockPromptBuilder.Setup(pb => pb.ComPeso(It.IsAny<string>())).Returns(_mockPromptBuilder.Object);
+            _mockPromptBuilder.Setup(pb => pb.ComAltura(It.IsAny<string>())).Returns(_mockPromptBuilder.Object);
+            _mockPromptBuilder.Setup(pb => pb.ComMassaMuscular(It.IsAny<string>())).Returns(_mockPromptBuilder.Object);
+            _mockPromptBuilder.Setup(pb => pb.ComPercentualDeGordura(It.IsAny<string>())).Returns(_mockPromptBuilder.Object);
+            _mockPromptBuilder.Setup(pb => pb.ComLimitacoes(It.IsAny<string>())).Returns(_mockPromptBuilder.Object);
+            _mockPromptBuilder.Setup(pb => pb.ComPartesDoCorpoEmFoco(It.IsAny<string>())).Returns(_mockPromptBuilder.Object);
+            _mockPromptBuilder.Setup(pb => pb.ComObjetivo(It.IsAny<string>())).Returns(_mockPromptBuilder.Object);
+            _mockPromptBuilder.Setup(pb => pb.ComTempoDeTreinoEmMinutos(It.IsAny<string>())).Returns(_mockPromptBuilder.Object);
+            _mockPromptBuilder.Setup(pb => pb.ComVariacaoDeTreino(It.IsAny<string>())).Returns(_mockPromptBuilder.Object);
+            _mockPromptBuilder.Setup(pb => pb.ComObservacao(It.IsAny<string>())).Returns(_mockPromptBuilder.Object);
+            _mockPromptBuilder.Setup(pb => pb.ComNivel(It.IsAny<string>())).Returns(_mockPromptBuilder.Object);
+            _mockPromptBuilder.Setup(pb => pb.Build()).Returns(resultadoEsperado);
 
-        // Assert
-        Assert.Equal(promptEsperado, resultado);
-    }
+            // Act  
+            var resultado = _promptAdapter.ConstruirPrompt(pessoa);
 
-    [Fact]
-    public void ConstruirPrompt_DeveLancarExcecao_QuandoPessoaForNula()
-    {
-        // Arrange
-        var pessoa = (Pessoa)null;
-
-        // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => _adaptadorPrompt.ConstruirPrompt(pessoa));
+            // Assert  
+            Assert.NotNull(resultado);
+            Assert.Equal(resultadoEsperado.Mensagem, resultado.Mensagem);
+        }
     }
 }

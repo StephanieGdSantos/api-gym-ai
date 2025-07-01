@@ -29,35 +29,25 @@ public class CohereService : ICohereService
         }
         };
 
-        var content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
-
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _cohereServiceOptions.ApiKey);
-
         try
         {
-            var response = await _httpClient.PostAsync(_cohereServiceOptions.BaseUrl, content);
+            var content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
 
-            if (!response.IsSuccessStatusCode)
-            {
-                var error = await response.Content.ReadAsStringAsync();
-                throw new ApplicationException($"Erro da API Cohere: {error}");
-            }
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _cohereServiceOptions.ApiKey);
+
+            var response = await _httpClient.PostAsync(_cohereServiceOptions.BaseUrl, content);
 
             var responseBody = await response.Content.ReadAsStringAsync();
 
             return responseBody;
         }
-        catch (HttpRequestException ex)
+        catch (NullReferenceException ex)
         {
-            throw new ApplicationException($"Erro ao se conectar com a API Cohere: {ex.Message}");
-        }
-        catch (JsonException ex)
-        {
-            throw new JsonException($"Erro ao processar a resposta da API Cohere: {ex.Message}");
+            throw new NullReferenceException($"O retorno do chat é nulo: {ex.Message}");
         }
         catch (Exception ex)
         {
-            throw new ApplicationException($"Erro inesperado: {ex.Message}");
+            throw new Exception($"Erro ao buscar resposta do chat: {ex.Message}");
         }
     }
 }

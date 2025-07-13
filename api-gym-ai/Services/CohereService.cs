@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Headers;
+﻿using System.Net;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using api_gym_ai.Interfaces.Services;
@@ -26,7 +27,7 @@ public class CohereService : ICohereService
             messages = new[]
             {
             new { role = "user", content = prompt }
-        }
+            }
         };
 
         try
@@ -36,18 +37,19 @@ public class CohereService : ICohereService
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _cohereServiceOptions.ApiKey);
 
             var response = await _httpClient.PostAsync(_cohereServiceOptions.BaseUrl, content);
+            response.EnsureSuccessStatusCode();
 
             var responseBody = await response.Content.ReadAsStringAsync();
 
             return responseBody;
         }
-        catch (NullReferenceException ex)
+        catch (HttpRequestException ex)
         {
-            throw new NullReferenceException($"O retorno do chat é nulo: {ex.Message}");
+            throw new HttpRequestException($"Erro ao fazer a requisição: {ex.Message}");
         }
         catch (Exception ex)
         {
-            throw new Exception($"Erro ao buscar resposta do chat: {ex.Message}");
+            throw new Exception($"Erro inesperado: {ex.Message}");
         }
     }
 }

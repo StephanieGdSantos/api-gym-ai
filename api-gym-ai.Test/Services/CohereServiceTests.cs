@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 using Moq;
 using Moq.Protected;
 
-namespace api_gym_ai.Tests;
+namespace api_gym_ai.Test.Services;
 
 public class CohereServiceTests
 {
@@ -31,12 +31,67 @@ public class CohereServiceTests
     }
 
     [Fact]
-    public async Task ChatAsync_DeveRetornarNullException_SeORetornoDoChatForNulo()
+    public async Task ChatAsync_DeveRetornarException_SeORetornoDoChatForNulo()
     {
         //Arrange & Act
-        var response = _cohereService.ChatAsync("prompt");
+        var response = _cohereService.ChatAsync(It.IsAny<string>());
     
         //Assert
-        await Assert.ThrowsAsync<NullReferenceException>(() => _cohereService.ChatAsync("prompt"));
+        await Assert.ThrowsAsync<Exception>(() => _cohereService.ChatAsync("prompt"));
     }
+
+    [Fact]
+    public async Task ChatAsync_DeveLancarHttpRequestException_QuandoStatusNaoForSucesso()
+    {
+        // Arrange
+        var httpMessageHandlerMock = new Mock<HttpMessageHandler>();
+        httpMessageHandlerMock
+            .Protected()
+            .Setup<Task<HttpResponseMessage>>(
+                "SendAsync",
+                ItExpr.IsAny<HttpRequestMessage>(),
+                ItExpr.IsAny<CancellationToken>())
+            .ReturnsAsync(new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.BadRequest,
+                Content = new StringContent("{\"error\":\"bad request\"}", Encoding.UTF8, "application/json")
+            });
+
+        var httpClient = new HttpClient(httpMessageHandlerMock.Object);
+        var cohereService = new CohereService(httpClient, _mockCohereServiceOptions.Object);
+
+        // Act & Assert
+        await Assert.ThrowsAsync<HttpRequestException>(() => cohereService.ChatAsync("prompt"));
+    }
+
+    [Fact]
+    public async Task ChatAsync_DeveRetornarRespostaDoChat_QuandoAChamadaForBemSucedida()
+    {
+        // Arrange
+        var mensagemEsperada = "{\"message\":\"ok\"}";
+
+        var httpMessageHandlerMock = new Mock<HttpMessageHandler>();
+        httpMessageHandlerMock
+            .Protected()
+            .Setup<Task<HttpResponseMessage>>(
+                "SendAsync",
+                ItExpr.IsAny<HttpRequestMessage>(),
+                ItExpr.IsAny<CancellationToken>())
+            .ReturnsAsync(new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(mensagemEsperada, Encoding.UTF8, "application/json")
+            });
+
+        var httpClient = new HttpClient(httpMessageHandlerMock.Object);
+
+        var cohereService = new CohereService(httpClient, _mockCohereServiceOptions.Object);
+
+        // Act
+        var resultado = await cohereService.ChatAsync("prompt");
+
+        // Assert
+        Assert.Equal(mensagemEsperada, resultado);
+    }
+
 }

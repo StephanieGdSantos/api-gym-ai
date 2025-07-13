@@ -11,18 +11,31 @@ using api_gym_ai.Facades;
 using System.Text.Json;
 using api_gym_ai.Exceptions;
 using System.Globalization;
+using Microsoft.Extensions.Options;
+using api_gym_ai.Options;
 
-namespace Tests.Adapters
+namespace api_gym_ai.Test.Adapters
 {
-    public class TreinoAdapterTests
+    public class PromptBuilderTests
     {
         private readonly Mock<IPromptAdapter> _mockPromptAdapter;
         private readonly Mock<IRetornoChatAdapter> _mockRetornoChatAdapter;
         private readonly Mock<ITreinoBuilder> _mockTreinoBuilder;
+        private readonly Mock<IOptions<PeriodoDeTreinoOptions>> _mockPeriodoDeTreinoOptions;
         private readonly TreinoAdapter _treinoAdapter;
 
-        public TreinoAdapterTests()
+        public PromptBuilderTests()
         {
+            var periodoDeTreinoOptions = new PeriodoDeTreinoOptions
+            {
+                Iniciante = 60,
+                Intermediario = 75,
+                Avancado = 45
+            };
+
+            var _mockPeriodoDeTreinoOptions = new Mock<IOptions<PeriodoDeTreinoOptions>>();
+            _mockPeriodoDeTreinoOptions.Setup(x => x.Value).Returns(periodoDeTreinoOptions);
+
             _mockPromptAdapter = new Mock<IPromptAdapter>();
             _mockRetornoChatAdapter = new Mock<IRetornoChatAdapter>();
             _mockTreinoBuilder = new Mock<ITreinoBuilder>();
@@ -30,7 +43,8 @@ namespace Tests.Adapters
             _treinoAdapter = new TreinoAdapter(
                 _mockPromptAdapter.Object,
                 _mockRetornoChatAdapter.Object,
-                _mockTreinoBuilder.Object
+                _mockTreinoBuilder.Object,
+                _mockPeriodoDeTreinoOptions.Object
             );
         }
 
@@ -110,7 +124,7 @@ namespace Tests.Adapters
         {
             //Arrange
             var nivelPessoa = InfoPreferencias.EnumNivelCondicionamento.Iniciante;
-            var periodoEsperadoEmDias = 120;
+            var periodoEsperadoEmDias = 60;
             var formatoDeData = CultureInfo.GetCultureInfo("pt-BR").DateTimeFormat;
 
             //Act

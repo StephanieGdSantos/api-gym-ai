@@ -7,7 +7,7 @@ using api_gym_ai.Models;
 using Moq;
 using System.Text.Json;
 
-namespace api_gym_ai.Test;
+namespace api_gym_ai.Test.Adapters;
 
 public class RetornoChatAdapterTests
 {

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using api_gym_ai.Facades;
 
-namespace Tests.Adapters
+namespace api_gym_ai.Test.Adapters
 {
     public class PromptAdapterTests
     {

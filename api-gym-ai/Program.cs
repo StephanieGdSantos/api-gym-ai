@@ -28,6 +28,8 @@ builder.Services.Configure<CohereServiceOptions>(
     builder.Configuration.GetSection("CohereConfigs"));
 builder.Services.Configure<PeriodoDeTreinoOptions>(
     builder.Configuration.GetSection("PeriodoEmDiasPorCondicionamentoFisico"));
+builder.Services.Configure<InformacoesPromptOptions>(
+    builder.Configuration.GetSection("InformacoesPrompt"));
 
 var app = builder.Build();
 

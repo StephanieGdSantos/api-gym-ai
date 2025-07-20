@@ -1,5 +1,7 @@
 ﻿using api_gym_ai.Interfaces.Builders;
 using api_gym_ai.Models;
+using api_gym_ai.Options;
+using Microsoft.Extensions.Options;
 using System.Numerics;
 using static api_gym_ai.Models.InfoPreferencias;
 
@@ -7,23 +9,22 @@ namespace api_gym_ai.Builders
 {
     public class PromptBuilder : IPromptBuilder
     {
-        private const int _quantidadeMinimaDeExercicios = 4;
-        private const int _quantidadeMaximaDeExercicios = 12;
-        private string _basePrompt { get; set; } = "Haja como um personal trainer profissional. Considere as " +
-            "seguintes informações do aluno: [informações]. Monte um plano de treino de academia no formato de " +
-            "variação indicado no campo 'variacaoTreino' (ABC, ABCD ou ABCDE). Cada treino deve conter entre " +
-            $"{_quantidadeMinimaDeExercicios} e {_quantidadeMaximaDeExercicios} exercícios, com duração aproximada " +
-            "de 'tempoDeTreino' por dia. Quanto mais treinos, mais isolados " +
-            "e específicos devem ser os grupos musculares por dia.\r\n\r\nPara cada exercício, informe:\r\n\r\n" +
-            "nome do exercício\r\n\r\nnúmero de séries\r\n\r\nnúmero de repetições\r\n\r\nmúsculos alvo " +
-            "(ex: “bíceps braquial”, “peitoral superior”, “glúteo máximo”)\r\n\r\nSua resposta deve ser um JSON " +
-            "válido, no formato exato abaixo. Não adicione comentários, explicações, formatação markdown, nem texto " +
-            "adicional. Apenas o JSON. json {\"variacaoDeTreino\": [{\"dia\": \"TREINO A\",\"musculosTrabalhados\": " +
-            "[\"peitoral\", \"tríceps\"],\"exercicios\": [{\"nome\": \"supino reto com barra\", \"series\": 4, " +
-            "\"repeticoes\": \"10-12\", \"musculoAlvo\": [\"peitoral médio\", \"tríceps medial\" ]} " +
-            "// demais exercícios ]}// TREINO B, C, etc.]}";
+        private readonly IOptions<InformacoesPromptOptions> _informacoesPromptOptions;
 
-        private string _informacoes { get; set; } = string.Empty;
+        private int _quantidadeMinimaDeExercicios;
+        private int _quantidadeMaximaDeExercicios;
+        private string _basePrompt;
+
+        private string _informacoes = string.Empty;
+
+        public PromptBuilder(IOptions<InformacoesPromptOptions> informacoesPromptOptions)
+        {
+            _informacoesPromptOptions = informacoesPromptOptions ?? throw new ArgumentNullException(nameof(informacoesPromptOptions), "As informações do prompt não podem ser nulas.");
+
+            _basePrompt = _informacoesPromptOptions.Value.BasePrompt;
+            _quantidadeMaximaDeExercicios = _informacoesPromptOptions.Value.QuantidadeMaximaExercicios;
+            _quantidadeMinimaDeExercicios = _informacoesPromptOptions.Value.QuantidadeMinimaExercicios;
+        }
 
         public IPromptBuilder ComAltura(string altura)
         {
@@ -63,7 +64,7 @@ namespace api_gym_ai.Builders
 
         public IPromptBuilder ComPartesDoCorpoEmFoco(string partesDoCorpoEmFoco)
         {
-           _informacoes += $"Partes do Corpo em Foco: {partesDoCorpoEmFoco}, ";
+            _informacoes += $"Partes do Corpo em Foco: {partesDoCorpoEmFoco}, ";
 
             return this;
         }
@@ -122,6 +123,8 @@ namespace api_gym_ai.Builders
         {
             _informacoes = _informacoes.TrimEnd(',', ' ');
 
+            FormatarBasePrompt();
+
             Prompt promptFinal = new()
             {
                 Mensagem = _basePrompt
@@ -129,6 +132,13 @@ namespace api_gym_ai.Builders
             };
 
             return promptFinal;
+        }
+
+        public string FormatarBasePrompt()
+        {
+            return _basePrompt
+                .Replace("[quantidadeMinimaDeExercicios]", _quantidadeMinimaDeExercicios.ToString())
+                .Replace("[quantidadeMaximaDeExercicios]", _quantidadeMaximaDeExercicios.ToString());
         }
     }
 }

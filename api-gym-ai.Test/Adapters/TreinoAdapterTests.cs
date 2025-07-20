@@ -21,7 +21,6 @@ namespace api_gym_ai.Test.Adapters
         private readonly Mock<IPromptAdapter> _mockPromptAdapter;
         private readonly Mock<IRetornoChatAdapter> _mockRetornoChatAdapter;
         private readonly Mock<ITreinoBuilder> _mockTreinoBuilder;
-        private readonly Mock<IOptions<PeriodoDeTreinoOptions>> _mockPeriodoDeTreinoOptions;
         private readonly TreinoAdapter _treinoAdapter;
 
         public PromptBuilderTests()

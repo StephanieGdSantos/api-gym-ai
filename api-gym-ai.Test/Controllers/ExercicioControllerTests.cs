@@ -58,11 +58,38 @@ public class ExercicioControllerTests
     }
 
     [Fact]
-    public async Task Post_RetornaBadRequest_QuandoExcecaoEhLancada()
+    public async Task Post_RetornaInternalServerError_QuandoExcecaoEhLancada()
     {
         // Arrange  
         var pessoa = new Pessoa();
         _treinoAdapterMock.Setup(x => x.MontarTreino(pessoa)).ThrowsAsync(new Exception("Exceção de teste"));
+
+        // Act  
+        var resultado = await _controller.Post(pessoa);
+
+        // Assert  
+        //var badRequestResult = Assert.IsType<BadRequestObjectResult>(resultado.Result);
+        //var resposta = Assert.IsType<Resposta<Treino>>(badRequestResult.Value);
+        Assert.False(resultado.Value.Sucesso);
+        Assert.Equal(HttpStatusCode.InternalServerError, resultado.Value.StatusCode);
+        Assert.Null(resultado.Value.Dados);
+        Assert.Contains("Exceção de teste", resultado.Value.Mensagem);
+    }
+
+    [Fact]
+    public async Task Post_RetornaBadRequest_QuandoOsDadosDaPessoaSaoInvalidos()
+    {
+        // Arrange  
+        var pessoa = new Pessoa()
+        {
+            Idade = 8,
+            Altura = 1.75,
+            Peso = 70,
+            InfoCorporais = null,
+            InfoPreferencias = null
+        };
+
+        _controller.ModelState.AddModelError("Idade", "A idade deve ser um valor válido, entre 10 e 100.");
 
         // Act  
         var resultado = await _controller.Post(pessoa);
@@ -73,6 +100,5 @@ public class ExercicioControllerTests
         Assert.False(resposta.Sucesso);
         Assert.Equal(HttpStatusCode.BadRequest, resposta.StatusCode);
         Assert.Null(resposta.Dados);
-        Assert.Contains("Exceção de teste", resposta.Mensagem);
     }
 }

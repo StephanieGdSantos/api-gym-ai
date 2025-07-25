@@ -24,6 +24,17 @@ namespace api_gym_ai.Controllers
         [HttpPost]
         public async Task<ActionResult<Resposta<Treino>>> Post([FromBody] Pessoa pessoa)
         {
+            if (ModelState.IsValid == false)
+            {
+                return BadRequest(new Resposta<Treino>
+                {
+                    Dados = null,
+                    Mensagem = "Dados inválidos fornecidos.",
+                    Sucesso = false,
+                    StatusCode = HttpStatusCode.BadRequest
+                });
+            }
+
             try
             {
                 var resposta = new Resposta<Treino>();
@@ -32,10 +43,10 @@ namespace api_gym_ai.Controllers
                 if (treinoProposto == null)
                 {
                     return NotFound(new Resposta<Treino>
-                    { 
-                        Dados = null, 
-                        Mensagem = "Erro ao montar o treino", 
-                        Sucesso = false, 
+                    {
+                        Dados = null,
+                        Mensagem = "Erro ao montar o treino",
+                        Sucesso = false,
                         StatusCode = HttpStatusCode.NotFound
                     });
                 }
@@ -50,13 +61,13 @@ namespace api_gym_ai.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new Resposta<Treino>
+                return new Resposta<Treino>
                 {
                     Dados = null,
                     Mensagem = $"Erro ao processar a solicitação: {ex.Message}",
                     Sucesso = false,
-                    StatusCode = HttpStatusCode.BadRequest
-                });
+                    StatusCode = HttpStatusCode.InternalServerError
+                };
             }
         }
     }

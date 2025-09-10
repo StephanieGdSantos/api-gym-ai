@@ -1,2 +1,2 @@
-# api-gym-ai
+# API.GymAi
 API utilizando IA generativa para gerar planos de treinos personalizados.

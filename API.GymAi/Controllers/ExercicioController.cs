@@ -20,13 +20,12 @@ namespace API.GymAi.Controllers
         {
             _treinoAdapter = treinoAdapter;
         }
-
+        
         [HttpPost]
         [ProducesResponseType<Treino>(StatusCodes.Status200OK)]
-        [ProducesResponseType<Treino>(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Treino>> Post([FromBody] Pessoa pessoa)
         {
-            var resposta = new Resposta<Treino>();
             var treinoProposto = await _treinoAdapter.MontarTreino(pessoa);
 
             return treinoProposto;

@@ -1,11 +1,16 @@
 ﻿using System.Net;
 
-namespace API.GymAi.Models
+namespace API.GymAi.Models;
+public class Resposta<T>
 {
-    public class Resposta<T>
+    public T? Dados { get; set; }
+    public bool Sucesso { get; set; }
+    public int StatusCode { get; set; }
+
+    public Resposta(T? dados, bool sucesso, int statusCode)
     {
-        public T? Dados { get; set; }
-        public bool Sucesso { get; set; }
-        public HttpStatusCode StatusCode { get; set; }
+        Dados = dados;
+        Sucesso = sucesso;
+        StatusCode = statusCode;
     }
 }

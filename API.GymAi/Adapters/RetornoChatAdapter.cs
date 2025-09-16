@@ -6,15 +6,18 @@ using System.Text.Json;
 
 namespace API.GymAi.Adapters
 {
-    public class RetornoChatAdapter : IRetornoChatAdapter
+    /// <summary>  
+    /// Adapter responsável por processar o retorno do chat.  
+    /// </summary>  
+    public class RetornoChatAdapter(IChatService cohereService) : IRetornoChatAdapter
     {
-        private readonly IChatService _cohereService;
+        private readonly IChatService _cohereService = cohereService;
 
-        public RetornoChatAdapter(IChatService cohereService)
-        {
-            _cohereService = cohereService;
-        }
-
+        /// <summary>  
+        /// Extrai a resposta do chat com base no prompt fornecido.  
+        /// </summary>  
+        /// <param name="prompt">O prompt contendo a mensagem para o chat.</param>  
+        /// <returns>Uma string formatada com a resposta do chat.</returns>  
         public async Task<string> ExtrairRespostaDoChat(Prompt prompt)
         {
             try
@@ -35,6 +38,11 @@ namespace API.GymAi.Adapters
             }
         }
 
+        /// <summary>  
+        /// Formata a mensagem do chat removendo quebras de linha e espaços desnecessários.  
+        /// </summary>  
+        /// <param name="mensagemChat">A mensagem do chat a ser formatada.</param>  
+        /// <returns>Uma string formatada.</returns>  
         public string FormatarRetornoDoChat(string mensagemChat)
         {
             return mensagemChat

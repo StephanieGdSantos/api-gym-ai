@@ -1,8 +1,9 @@
-﻿namespace API.GymAi.Exceptions;
-public class JsonDeserializationException : Exception
+﻿using System.Runtime.Serialization;
+
+namespace API.GymAi.Exceptions;
+/// <summary>
+/// Representa uma exceção que ocorre durante a desserialização de JSON.
+/// </summary>
+public class JsonDeserializationException(string message, Exception innerException) : Exception(message, innerException), ISerializable
 {
-    public JsonDeserializationException(string message, Exception innerException)
-        : base(message, innerException)
-    {
-    }
 }

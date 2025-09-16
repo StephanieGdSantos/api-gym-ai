@@ -4,15 +4,18 @@ using API.GymAi.Models;
 
 namespace API.GymAi.Facades
 {
-    public class PromptAdapter : IPromptAdapter
+    /// <summary>  
+    /// Adapter responsável por construir prompts com base nas informações de uma pessoa.  
+    /// </summary>  
+    public class PromptAdapter(IPromptBuilder promptBuilder) : IPromptAdapter
     {
-        private readonly IPromptBuilder _promptBuilder;
+        private readonly IPromptBuilder _promptBuilder = promptBuilder;
 
-        public PromptAdapter(IPromptBuilder promptBuilder)
-        {
-            _promptBuilder = promptBuilder;
-        }
-
+        /// <summary>  
+        /// Constrói um prompt com base nas informações fornecidas de uma pessoa.  
+        /// </summary>  
+        /// <param name="pessoa">A pessoa cujas informações serão usadas para construir o prompt.</param>  
+        /// <returns>O prompt construído.</returns>  
         public Prompt ConstruirPrompt(Pessoa pessoa)
         {
             var partesDoCorpoEmFoco = string.Join(", ", pessoa.InfoPreferencias.PartesDoCorpoEmFoco.Select(parteDoCorpo => parteDoCorpo.ToString()));

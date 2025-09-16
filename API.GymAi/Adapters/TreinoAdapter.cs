@@ -11,6 +11,9 @@ using static API.GymAi.Models.InfoPreferencias;
 
 namespace API.GymAi.Facades
 {
+    /// <summary>  
+    /// Adapter responsável por montar treinos personalizados com base nas informações de uma pessoa.  
+    /// </summary>  
     public class TreinoAdapter : ITreinoAdapter
     {
         private readonly IPromptAdapter _promptAdapter;
@@ -18,6 +21,13 @@ namespace API.GymAi.Facades
         private readonly ITreinoBuilder _treinoBuilder;
         private readonly PeriodoDeTreinoOptions _periodoDeTreinoOptions;
 
+        /// <summary>  
+        /// Inicializa uma nova instância da classe <see cref="TreinoAdapter"/>.  
+        /// </summary>  
+        /// <param name="promptAdapter">Componente para construção de prompts.</param>  
+        /// <param name="retornoChatAdapter">Componente para extração de respostas do chat.</param>  
+        /// <param name="treinoBuilder">Construtor de treinos.</param>  
+        /// <param name="periodoDeTreinoOptions">Opções de configuração para períodos de treino.</param>  
         public TreinoAdapter(IPromptAdapter promptAdapter, IRetornoChatAdapter retornoChatAdapter, ITreinoBuilder treinoBuilder,
             IOptions<PeriodoDeTreinoOptions> periodoDeTreinoOptions)
         {
@@ -27,6 +37,11 @@ namespace API.GymAi.Facades
             _periodoDeTreinoOptions = periodoDeTreinoOptions.Value;
         }
 
+        /// <summary>  
+        /// Monta um treino personalizado com base nas informações fornecidas de uma pessoa.  
+        /// </summary>  
+        /// <param name="pessoa">Objeto contendo as informações da pessoa.</param>  
+        /// <returns>Um objeto <see cref="Treino"/> contendo o treino montado ou null se ocorrer um erro.</returns>  
         public async Task<Treino?> MontarTreino(Pessoa pessoa)
         {
             try
@@ -54,6 +69,11 @@ namespace API.GymAi.Facades
             }
         }
 
+        /// <summary>  
+        /// Calcula o período de treino com base no nível de condicionamento.  
+        /// </summary>  
+        /// <param name="nivelCondicionamento">Nível de condicionamento da pessoa.</param>  
+        /// <returns>Um objeto <see cref="PeriodoTreino"/> contendo as datas de início e fim do treino.</returns>  
         public PeriodoTreino CalcularPeriodoDeTreino(EnumNivelCondicionamento nivelCondicionamento)
         {
             var formatoDeData = CultureInfo.GetCultureInfo("pt-BR").DateTimeFormat;
@@ -68,6 +88,11 @@ namespace API.GymAi.Facades
             };
         }
 
+        /// <summary>  
+        /// Consulta o período de treino recomendado com base no nível de condicionamento.  
+        /// </summary>  
+        /// <param name="nivelCondicionamento">Nível de condicionamento da pessoa.</param>  
+        /// <returns>O número de dias recomendados para o período de treino.</returns>  
         public int ConsultarPeriodoPorCondicionamento(EnumNivelCondicionamento nivelCondicionamento)
         {
             return nivelCondicionamento switch

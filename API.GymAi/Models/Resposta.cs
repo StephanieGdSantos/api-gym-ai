@@ -22,6 +22,8 @@ public class Resposta<T>
     /// </summary>
     public int StatusCode { get; set; }
 
+    public Resposta() { }
+
     /// <summary>
     /// Inicializa uma nova instância da classe <see cref="Resposta{T}"/>.
     /// </summary>

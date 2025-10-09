@@ -35,17 +35,18 @@ builder.Services.AddOptions();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerExamplesFromAssemblyOf<TreinoBadRequestExample>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<TreinoOkExample>();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.ExampleFilters();
-     options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+     options.SwaggerDoc("v1", new OpenApiInfo
      {
          Title = "GymAi API",
          Version = "v1",
          Description = "API para geração de treinos inteligentes"
      });
 
-    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.ExampleFilters();
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"; 
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
@@ -55,7 +56,6 @@ builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<ITreinoBuilder, TreinoBuilder>();
 builder.Services.AddScoped<IPromptBuilder, PromptBuilder>();
 builder.Services.AddScoped<IRetornoChatAdapter, RetornoChatAdapter>();
-builder.Services.AddScoped<IChatRepository, CohereRepository>();
 
 builder.Services.AddOptions<ChatOptions>()
     .Bind(builder.Configuration
@@ -77,15 +77,15 @@ builder.Services.AddOptions<InformacoesPromptOptions>()
 
 var app = builder.Build();
 
-//if (app.Environment.IsDevelopment())
-//{
-app.UseSwagger();
-app.UseSwaggerUI(options =>
+if (app.Environment.IsDevelopment())
 {
-    options.SwaggerEndpoint("/swagger/v1/swagger.json", "GymAi API v1");
-    options.RoutePrefix = "swagger";
-});
-//}
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "GymAi API v1");
+        options.RoutePrefix = string.Empty;
+    });
+}
 
 app.UseHttpsRedirection();
 

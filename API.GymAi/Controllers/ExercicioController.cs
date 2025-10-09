@@ -37,6 +37,8 @@ namespace API.GymAi.Controllers
         /// <returns>Resposta contendo o treino proposto ou um erro.</returns>  
         [HttpPost]
         [ProducesResponseType(typeof(Resposta<Treino>), StatusCodes.Status200OK)]
+        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(TreinoOkExample))]
+        [ProducesResponseType(typeof(Resposta<Treino>), StatusCodes.Status400BadRequest)]
         [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(TreinoBadRequestExample))]
         public async Task<ActionResult> Post([FromBody] Pessoa pessoa)
         {

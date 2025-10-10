@@ -1,21 +1,21 @@
 ﻿using Xunit;
 using Moq;
 using System.Threading.Tasks;
-using API.GymAi.Adapters;
-using API.GymAi.Interfaces.Adapters;
-using API.GymAi.Interfaces.Builders;
-using API.GymAi.Models;
-using API.GymAi.Utils;
+using APIGymAi.Adapters;
+using APIGymAi.Interfaces.Adapters;
+using APIGymAi.Interfaces.Builders;
+using APIGymAi.Models;
+using APIGymAi.Utils;
 using System.Collections.Generic;
-using API.GymAi.Facades;
+using APIGymAi.Facades;
 using System.Text.Json;
-using API.GymAi.Exceptions;
+using APIGymAi.Exceptions;
 using System.Globalization;
 using Microsoft.Extensions.Options;
-using API.GymAi.Options;
-using API.GymAi.Builders;
+using APIGymAi.Options;
+using APIGymAi.Builders;
 
-namespace API.GymAi.UnitTests.Builders
+namespace APIGymAi.UnitTests.Builders
 {
     public class TreinoBuilderTests
     {

@@ -1,17 +1,16 @@
-﻿using API.GymAi.Models;
+﻿using APIGymAi.Models;
 
-namespace API.GymAi.Adapters.Interfaces
+namespace APIGymAi.Adapters.Interface;
+
+/// <summary>
+/// Interface responsável por adaptar e montar treinos personalizados para uma pessoa.
+/// </summary>
+public interface ITreinoAdapter
 {
     /// <summary>
-    /// Interface responsável por adaptar e montar treinos personalizados para uma pessoa.
+    /// Monta um treino personalizado com base nas características de uma pessoa.
     /// </summary>
-    public interface ITreinoAdapter
-    {
-        /// <summary>
-        /// Monta um treino personalizado com base nas características de uma pessoa.
-        /// </summary>
-        /// <param name="pessoa">Objeto que contém as informações da pessoa para quem o treino será montado.</param>
-        /// <returns>Um objeto <see cref="Treino"/> contendo o treino montado ou null se não for possível montar.</returns>
-        public Task<Treino?> MontarTreino(Pessoa pessoa);
-    }
+    /// <param name="pessoa">Objeto que contém as informações da pessoa para quem o treino será montado.</param>
+    /// <returns>Um objeto <see cref="Treino"/> contendo o treino montado ou null se não for possível montar.</returns>
+    public Task<Treino?> MontarTreino(Pessoa pessoa);
 }

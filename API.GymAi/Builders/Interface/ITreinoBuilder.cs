@@ -1,6 +1,6 @@
-﻿using API.GymAi.Models;
+﻿using APIGymAi.Models;
 
-namespace API.GymAi.Builders.Interfaces
+namespace APIGymAi.Builders.Interface
 {
     /// <summary>
     /// Interface para construção de objetos do tipo Treino.

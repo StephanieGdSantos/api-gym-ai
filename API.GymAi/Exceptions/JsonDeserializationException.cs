@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace API.GymAi.Exceptions;
+namespace APIGymAi.Exceptions;
 /// <summary>
 /// Representa uma exceção que ocorre durante a desserialização de JSON.
 /// </summary>

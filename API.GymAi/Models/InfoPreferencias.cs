@@ -1,149 +1,148 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace API.GymAi.Models
+namespace APIGymAi.Models;
+
+/// <summary>
+/// Representa as preferências de treino de um usuário.
+/// </summary>
+public class InfoPreferencias
 {
     /// <summary>
-    /// Representa as preferências de treino de um usuário.
+    /// Tempo mínimo permitido para o treino, em minutos.
     /// </summary>
-    public class InfoPreferencias
+    public const int TempoDeTreinoMin = 20;
+
+    /// <summary>
+    /// Tempo máximo permitido para o treino, em minutos.
+    /// </summary>
+    public const int TempoDeTreinoMax = 240;
+
+    /// <summary>
+    /// Objetivo do treino.
+    /// </summary>
+    [Required(ErrorMessage = "O objetivo do treino é obrigatório.")]
+    public EnumObjetivo Objetivo { get; set; }
+
+    /// <summary>
+    /// Partes do corpo que o usuário deseja focar durante o treino.
+    /// </summary>
+    [Required(ErrorMessage = "É obrigatório informar as partes do corpo que deseja focar.")]
+    public IEnumerable<EnumPartesDoCorpoEmFoco> PartesDoCorpoEmFoco { get; set; } = new List<EnumPartesDoCorpoEmFoco>();
+
+    /// <summary>
+    /// Tempo de treino em minutos.
+    /// </summary>
+    [Required(ErrorMessage = "O tempo de treino é obrigatório.")]
+    [Range(TempoDeTreinoMin, TempoDeTreinoMax, ErrorMessage = "O tempo de treino deve ser de 20 minutos a 4 horas.")]
+    public double TempoDeTreinoEmMinutos { get; set; }
+
+    /// <summary>
+    /// Tipo de variação do treino.
+    /// </summary>
+    [Required(ErrorMessage = "A variação de treino é obrigatória.")]
+    public string VariacaoTreino { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Observações adicionais sobre o treino.
+    /// </summary>
+    public string Observacao { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Nível de condicionamento físico do usuário.
+    /// </summary>
+    [Required(ErrorMessage = "O nível de treino é obrigatório.")]
+    public EnumNivelCondicionamento Nivel { get; set; }
+
+    /// <summary>
+    /// Enumeração das partes do corpo que podem ser focadas durante o treino.
+    /// </summary>
+    public enum EnumPartesDoCorpoEmFoco
     {
         /// <summary>
-        /// Tempo mínimo permitido para o treino, em minutos.
+        /// Foco no peito.
         /// </summary>
-        public const int TempoDeTreinoMin = 20;
+        Peito,
 
         /// <summary>
-        /// Tempo máximo permitido para o treino, em minutos.
+        /// Foco nas costas.
         /// </summary>
-        public const int TempoDeTreinoMax = 240;
+        Costas,
 
         /// <summary>
-        /// Objetivo do treino.
+        /// Foco nos ombros.
         /// </summary>
-        [Required(ErrorMessage = "O objetivo do treino é obrigatório.")]
-        public EnumObjetivo Objetivo { get; set; }
+        Ombros,
 
         /// <summary>
-        /// Partes do corpo que o usuário deseja focar durante o treino.
+        /// Foco nos braços.
         /// </summary>
-        [Required(ErrorMessage = "É obrigatório informar as partes do corpo que deseja focar.")]
-        public IEnumerable<EnumPartesDoCorpoEmFoco> PartesDoCorpoEmFoco { get; set; } = new List<EnumPartesDoCorpoEmFoco>();
+        Bracos,
 
         /// <summary>
-        /// Tempo de treino em minutos.
+        /// Foco nas pernas.
         /// </summary>
-        [Required(ErrorMessage = "O tempo de treino é obrigatório.")]
-        [Range(TempoDeTreinoMin, TempoDeTreinoMax, ErrorMessage = "O tempo de treino deve ser de 20 minutos a 4 horas.")]
-        public double TempoDeTreinoEmMinutos { get; set; }
+        Pernas,
 
         /// <summary>
-        /// Tipo de variação do treino.
+        /// Foco no abdômen.
         /// </summary>
-        [Required(ErrorMessage = "A variação de treino é obrigatória.")]
-        public string VariacaoTreino { get; set; } = string.Empty;
+        Abdomen,
+    }
+
+    /// <summary>
+    /// Enumeração dos objetivos possíveis para o treino.
+    /// </summary>
+    public enum EnumObjetivo
+    {
+        /// <summary>
+        /// Objetivo de emagrecimento.
+        /// </summary>
+        Emagrecimento,
 
         /// <summary>
-        /// Observações adicionais sobre o treino.
+        /// Objetivo de hipertrofia.
         /// </summary>
-        public string Observacao { get; set; } = string.Empty;
+        Hipertrofia,
 
         /// <summary>
-        /// Nível de condicionamento físico do usuário.
+        /// Objetivo de definição muscular.
         /// </summary>
-        [Required(ErrorMessage = "O nível de treino é obrigatório.")]
-        public EnumNivelCondicionamento Nivel { get; set; }
+        DefinicaoMuscular,
 
         /// <summary>
-        /// Enumeração das partes do corpo que podem ser focadas durante o treino.
+        /// Objetivo de resistência.
         /// </summary>
-        public enum EnumPartesDoCorpoEmFoco
-        {
-            /// <summary>
-            /// Foco no peito.
-            /// </summary>
-            Peito,
-
-            /// <summary>
-            /// Foco nas costas.
-            /// </summary>
-            Costas,
-
-            /// <summary>
-            /// Foco nos ombros.
-            /// </summary>
-            Ombros,
-
-            /// <summary>
-            /// Foco nos braços.
-            /// </summary>
-            Bracos,
-
-            /// <summary>
-            /// Foco nas pernas.
-            /// </summary>
-            Pernas,
-
-            /// <summary>
-            /// Foco no abdômen.
-            /// </summary>
-            Abdomen,
-        }
+        Resistencia,
 
         /// <summary>
-        /// Enumeração dos objetivos possíveis para o treino.
+        /// Objetivo de força.
         /// </summary>
-        public enum EnumObjetivo
-        {
-            /// <summary>
-            /// Objetivo de emagrecimento.
-            /// </summary>
-            Emagrecimento,
-
-            /// <summary>
-            /// Objetivo de hipertrofia.
-            /// </summary>
-            Hipertrofia,
-
-            /// <summary>
-            /// Objetivo de definição muscular.
-            /// </summary>
-            DefinicaoMuscular,
-
-            /// <summary>
-            /// Objetivo de resistência.
-            /// </summary>
-            Resistencia,
-
-            /// <summary>
-            /// Objetivo de força.
-            /// </summary>
-            Forca,
-
-            /// <summary>
-            /// Objetivo de flexibilidade.
-            /// </summary>
-            Flexibilidade
-        }
+        Forca,
 
         /// <summary>
-        /// Enumeração dos níveis de condicionamento físico.
+        /// Objetivo de flexibilidade.
         /// </summary>
-        public enum EnumNivelCondicionamento
-        {
-            /// <summary>
-            /// Nível iniciante.
-            /// </summary>
-            Iniciante,
+        Flexibilidade
+    }
 
-            /// <summary>
-            /// Nível intermediário.
-            /// </summary>
-            Intermediario,
+    /// <summary>
+    /// Enumeração dos níveis de condicionamento físico.
+    /// </summary>
+    public enum EnumNivelCondicionamento
+    {
+        /// <summary>
+        /// Nível iniciante.
+        /// </summary>
+        Iniciante,
 
-            /// <summary>
-            /// Nível avançado.
-            /// </summary>
-            Avancado
-        }
+        /// <summary>
+        /// Nível intermediário.
+        /// </summary>
+        Intermediario,
+
+        /// <summary>
+        /// Nível avançado.
+        /// </summary>
+        Avancado
     }
 }

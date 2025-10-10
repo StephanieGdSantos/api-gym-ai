@@ -1,50 +1,49 @@
-﻿namespace API.GymAi.Models
+﻿namespace APIGymAi.Models;
+
+/// <summary>  
+/// Representa o retorno de um chat, contendo um identificador e uma mensagem.  
+/// </summary>  
+public class RetornoChat
 {
     /// <summary>  
-    /// Representa o retorno de um chat, contendo um identificador e uma mensagem.  
+    /// Identificador único do retorno do chat.  
     /// </summary>  
-    public class RetornoChat
-    {
-        /// <summary>  
-        /// Identificador único do retorno do chat.  
-        /// </summary>  
-        public string id { get; set; }
-
-        /// <summary>  
-        /// Mensagem associada ao retorno do chat.  
-        /// </summary>  
-        public Message message { get; set; }
-    }
+    public string id { get; set; }
 
     /// <summary>  
-    /// Representa uma mensagem no contexto do chat.  
+    /// Mensagem associada ao retorno do chat.  
     /// </summary>  
-    public class Message
-    {
-        /// <summary>  
-        /// Papel associado à mensagem (ex.: usuário, assistente).  
-        /// </summary>  
-        public string role { get; set; }
+    public Message message { get; set; }
+}
 
-        /// <summary>  
-        /// Conteúdo da mensagem, podendo conter múltiplos itens.  
-        /// </summary>  
-        public Content[] content { get; set; }
-    }
+/// <summary>  
+/// Representa uma mensagem no contexto do chat.  
+/// </summary>  
+public class Message
+{
+    /// <summary>  
+    /// Papel associado à mensagem (ex.: usuário, assistente).  
+    /// </summary>  
+    public string role { get; set; }
 
     /// <summary>  
-    /// Representa o conteúdo de uma mensagem.  
+    /// Conteúdo da mensagem, podendo conter múltiplos itens.  
     /// </summary>  
-    public class Content
-    {
-        /// <summary>  
-        /// Tipo do conteúdo (ex.: texto, imagem).  
-        /// </summary>  
-        public string type { get; set; }
+    public Content[] content { get; set; }
+}
 
-        /// <summary>  
-        /// Texto associado ao conteúdo.  
-        /// </summary>  
-        public string text { get; set; }
-    }
+/// <summary>  
+/// Representa o conteúdo de uma mensagem.  
+/// </summary>  
+public class Content
+{
+    /// <summary>  
+    /// Tipo do conteúdo (ex.: texto, imagem).  
+    /// </summary>  
+    public string type { get; set; }
+
+    /// <summary>  
+    /// Texto associado ao conteúdo.  
+    /// </summary>  
+    public string text { get; set; }
 }

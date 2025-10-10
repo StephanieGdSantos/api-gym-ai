@@ -1,14 +1,14 @@
 using Xunit;
 using Moq;
-using API.GymAi.Models;
+using APIGymAi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using API.GymAi.Facades;
-using API.GymAi.Adapters.Interfaces;
-using API.GymAi.Builders.Interfaces;
+using APIGymAi.Facades;
+using APIGymAi.Adapters.Interfaces;
+using APIGymAi.Builders.Interfaces;
 
-namespace API.GymAi.UnitTests.Adapters
+namespace APIGymAi.UnitTests.Adapters
 {
     public class PromptAdapterTests
     {

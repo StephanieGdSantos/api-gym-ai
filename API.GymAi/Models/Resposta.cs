@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace API.GymAi.Models;
+namespace APIGymAi.Models;
 /// <summary>
 /// Representa uma resposta genérica com dados, status de sucesso e código de status HTTP.
 /// </summary>

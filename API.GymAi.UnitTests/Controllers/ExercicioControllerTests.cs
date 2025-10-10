@@ -1,13 +1,13 @@
-using API.GymAi.Adapters.Interfaces;
-using API.GymAi.Controllers;
-using API.GymAi.Models;
+using APIGymAi.Adapters.Interfaces;
+using APIGymAi.Controllers;
+using APIGymAi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace API.GymAi.UnitTests.Controllers;
+namespace APIGymAi.UnitTests.Controllers;
 
 public class ExercicioControllerTests
 {

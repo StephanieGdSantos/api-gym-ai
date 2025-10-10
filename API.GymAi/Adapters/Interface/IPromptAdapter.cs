@@ -1,17 +1,16 @@
-﻿using API.GymAi.Models;
+﻿using APIGymAi.Models;
 
-namespace API.GymAi.Adapters.Interfaces
+namespace APIGymAi.Adapters.Interface;
+
+/// <summary>
+/// Interface para adaptação de prompts.
+/// </summary>
+public interface IPromptAdapter
 {
     /// <summary>
-    /// Interface para adaptação de prompts.
+    /// Constrói um objeto <see cref="Prompt"/> com base nas informações de uma pessoa.
     /// </summary>
-    public interface IPromptAdapter
-    {
-        /// <summary>
-        /// Constrói um objeto <see cref="Prompt"/> com base nas informações de uma pessoa.
-        /// </summary>
-        /// <param name="pessoa">Objeto do tipo <see cref="Pessoa"/> contendo as informações necessárias.</param>
-        /// <returns>Um objeto <see cref="Prompt"/> contendo a mensagem gerada.</returns>
-        Prompt ConstruirPrompt(Pessoa pessoa);
-    }
+    /// <param name="pessoa">Objeto do tipo <see cref="Pessoa"/> contendo as informações necessárias.</param>
+    /// <returns>Um objeto <see cref="Prompt"/> contendo a mensagem gerada.</returns>
+    Prompt ConstruirPrompt(Pessoa pessoa);
 }

@@ -2,12 +2,12 @@
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using API.GymAi.Options;
-using API.GymAi.Repositories.Interface;
-using API.GymAi.Services.Interface;
+using APIGymAi.Options;
+using APIGymAi.Repositories.Interface;
+using APIGymAi.Services.Interface;
 using Microsoft.Extensions.Options;
 
-namespace API.GymAi.Services;
+namespace APIGymAi.Services;
 /// <summary>  
 /// Service responsible for handling chat-related operations.  
 /// </summary>  

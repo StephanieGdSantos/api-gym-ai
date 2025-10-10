@@ -1,14 +1,14 @@
 ﻿using System.Net;
 using System.Text;
 using System.Text.Json;
-using API.GymAi.Models;
-using API.GymAi.Options;
-using API.GymAi.Services;
+using APIGymAi.Models;
+using APIGymAi.Options;
+using APIGymAi.Services;
 using Microsoft.Extensions.Options;
 using Moq;
 using Moq.Protected;
 
-namespace API.GymAi.UnitTests.Services;
+namespace APIGymAi.UnitTests.Services;
 
 public class CohereServiceTests
 {

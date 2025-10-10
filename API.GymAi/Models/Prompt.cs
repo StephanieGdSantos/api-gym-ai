@@ -1,13 +1,12 @@
-﻿namespace API.GymAi.Models
+﻿namespace APIGymAi.Models;
+
+/// <summary>
+/// Representa um prompt contendo uma mensagem.
+/// </summary>
+public class Prompt
 {
     /// <summary>
-    /// Representa um prompt contendo uma mensagem.
+    /// Obtém ou define a mensagem do prompt.
     /// </summary>
-    public class Prompt
-    {
-        /// <summary>
-        /// Obtém ou define a mensagem do prompt.
-        /// </summary>
-        public string Mensagem { get; set; } = string.Empty;
-    }
+    public string Mensagem { get; set; } = string.Empty;
 }

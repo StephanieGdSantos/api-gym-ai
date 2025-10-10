@@ -1,7 +1,7 @@
-﻿using API.GymAi.Models;
+﻿using APIGymAi.Models;
 using Swashbuckle.AspNetCore.Filters;
 
-namespace API.GymAi.RespostaSwaggerExample;
+namespace APIGymAi.RespostaSwaggerExample;
 
 public class TreinoBadRequestExample : IExamplesProvider<Resposta<Treino>>
 {

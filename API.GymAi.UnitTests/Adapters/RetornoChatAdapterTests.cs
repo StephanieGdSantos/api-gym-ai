@@ -1,13 +1,13 @@
-using API.GymAi.Adapters;
-using API.GymAi.Adapters.Interfaces;
-using API.GymAi.Facades;
-using API.GymAi.Interfaces.Builders;
-using API.GymAi.Models;
-using API.GymAi.Services.Interface;
+using APIGymAi.Adapters;
+using APIGymAi.Adapters.Interfaces;
+using APIGymAi.Facades;
+using APIGymAi.Interfaces.Builders;
+using APIGymAi.Models;
+using APIGymAi.Services.Interface;
 using Moq;
 using System.Text.Json;
 
-namespace API.GymAi.UnitTests.Adapters;
+namespace APIGymAi.UnitTests.Adapters;
 
 public class RetornoChatAdapterTests
 {

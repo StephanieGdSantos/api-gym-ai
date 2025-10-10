@@ -1,20 +1,20 @@
 ﻿using Xunit;
 using Moq;
 using System.Threading.Tasks;
-using API.GymAi.Adapters;
-using API.GymAi.Models;
-using API.GymAi.Utils;
+using APIGymAi.Adapters;
+using APIGymAi.Models;
+using APIGymAi.Utils;
 using System.Collections.Generic;
-using API.GymAi.Facades;
+using APIGymAi.Facades;
 using System.Text.Json;
-using API.GymAi.Exceptions;
+using APIGymAi.Exceptions;
 using System.Globalization;
 using Microsoft.Extensions.Options;
-using API.GymAi.Options;
-using API.GymAi.Adapters.Interfaces;
-using API.GymAi.Builders.Interfaces;
+using APIGymAi.Options;
+using APIGymAi.Adapters.Interfaces;
+using APIGymAi.Builders.Interfaces;
 
-namespace API.GymAi.UnitTests.Adapters
+namespace APIGymAi.UnitTests.Adapters
 {
     public class PromptBuilderTests
     {

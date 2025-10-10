@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\API.GymAi\API.GymAi.csproj" />
+    <ProjectReference Include="..\API.GymAi\APIGymAi.csproj" />
   </ItemGroup>
 
   <ItemGroup>

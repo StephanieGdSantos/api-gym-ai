@@ -1,18 +1,12 @@
-﻿using Xunit;
-using Moq;
-using System.Threading.Tasks;
+﻿using Moq;
 using APIGymAi.Adapters;
 using APIGymAi.Models;
-using APIGymAi.Utils;
-using System.Collections.Generic;
-using APIGymAi.Facades;
-using System.Text.Json;
 using APIGymAi.Exceptions;
 using System.Globalization;
 using Microsoft.Extensions.Options;
 using APIGymAi.Options;
-using APIGymAi.Adapters.Interfaces;
-using APIGymAi.Builders.Interfaces;
+using APIGymAi.Adapters.Interface;
+using APIGymAi.Builders.Interface;
 
 namespace APIGymAi.UnitTests.Adapters
 {

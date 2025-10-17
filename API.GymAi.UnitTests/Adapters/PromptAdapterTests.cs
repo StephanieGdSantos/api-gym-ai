@@ -1,12 +1,8 @@
-using Xunit;
 using Moq;
 using APIGymAi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using APIGymAi.Facades;
-using APIGymAi.Adapters.Interfaces;
-using APIGymAi.Builders.Interfaces;
+using APIGymAi.Adapters.Interface;
+using APIGymAi.Builders.Interface;
+using APIGymAi.Adapters;
 
 namespace APIGymAi.UnitTests.Adapters
 {

@@ -1,7 +1,5 @@
 using APIGymAi.Adapters;
-using APIGymAi.Adapters.Interfaces;
-using APIGymAi.Facades;
-using APIGymAi.Interfaces.Builders;
+using APIGymAi.Adapters.Interface;
 using APIGymAi.Models;
 using APIGymAi.Services.Interface;
 using Moq;

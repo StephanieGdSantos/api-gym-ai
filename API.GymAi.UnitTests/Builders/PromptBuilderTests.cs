@@ -1,14 +1,4 @@
-﻿using Xunit;
-using Moq;
-using System.Threading.Tasks;
-using APIGymAi.Adapters;
-using APIGymAi.Models;
-using APIGymAi.Utils;
-using System.Collections.Generic;
-using APIGymAi.Facades;
-using System.Text.Json;
-using APIGymAi.Exceptions;
-using System.Globalization;
+﻿using Moq;
 using Microsoft.Extensions.Options;
 using APIGymAi.Options;
 using APIGymAi.Builders;

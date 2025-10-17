@@ -1,4 +1,4 @@
-using APIGymAi.Adapters.Interfaces;
+using APIGymAi.Adapters.Interface;
 using APIGymAi.Controllers;
 using APIGymAi.Models;
 using Microsoft.AspNetCore.Mvc;

@@ -1,14 +1,15 @@
 using APIGymAi.Adapters;
-using APIGymAi.Adapters.Interfaces;
+using APIGymAi.Adapters.Interface;
 using APIGymAi.Builders;
-using APIGymAi.Builders.Interfaces;
-using APIGymAi.Facades;
+using APIGymAi.Builders.Interface;
 using APIGymAi.Options;
+using APIGymAi.Policies;
 using APIGymAi.Repositories;
 using APIGymAi.Repositories.Interface;
 using APIGymAi.RespostaSwaggerExample;
 using APIGymAi.Services;
 using APIGymAi.Services.Interface;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Polly;
 using Polly.Extensions.Http;
@@ -16,18 +17,6 @@ using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-
-var retryPolicy = HttpPolicyExtensions
-    .HandleTransientHttpError()
-    .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
-
-var circuitBreakerPolicy = HttpPolicyExtensions
-    .HandleTransientHttpError()
-    .CircuitBreakerAsync(3, TimeSpan.FromSeconds(30));
-
-builder.Services.AddHttpClient<IChatRepository, CohereRepository>()
-    .AddPolicyHandler(retryPolicy)
-    .AddPolicyHandler(circuitBreakerPolicy);
 
 builder.Services.AddControllers();
 builder.Services.AddOptions();
@@ -50,12 +39,35 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
+Action<DelegateResult<HttpResponseMessage>, TimeSpan> onBreak = (result, delay) =>
+{
+    Console.WriteLine($"Circuito aberto em {DateTime.Now}");
+};
+Action onReset = () =>
+{
+    Console.WriteLine($"Circuito fechado em {DateTime.Now}");
+};
+Action onHalfOpen = () =>
+{
+    Console.WriteLine($"Circuito em half-open em {DateTime.Now}");
+};
+
 builder.Services.AddScoped<ITreinoAdapter, TreinoAdapter>();
 builder.Services.AddScoped<IPromptAdapter, PromptAdapter>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<ITreinoBuilder, TreinoBuilder>();
 builder.Services.AddScoped<IPromptBuilder, PromptBuilder>();
 builder.Services.AddScoped<IRetornoChatAdapter, RetornoChatAdapter>();
+builder.Services.AddScoped<RetryPolicyProvider>();
+
+builder.Services.AddSingleton<CircuitBreakerPolicyProvider>(sp =>
+    new CircuitBreakerPolicyProvider(
+        sp.GetRequiredService<IOptions<PolicyOptions>>(),
+        onBreak,
+        onReset,
+        onHalfOpen
+    )
+);
 
 builder.Services.AddOptions<ChatOptions>()
     .Bind(builder.Configuration
@@ -74,6 +86,26 @@ builder.Services.AddOptions<InformacoesPromptOptions>()
         .GetSection("InformacoesPrompt"))
     .ValidateDataAnnotations()
     .ValidateOnStart();
+
+builder.Services.AddOptions<PolicyOptions>()
+    .Bind(builder.Configuration
+        .GetSection("PolicyOptions"))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
+builder.Services.AddOptions<HttpClientOptions>()
+    .Bind(builder.Configuration
+    .GetSection("HttpClientOptions"))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
+builder.Services.AddHttpClient<IChatRepository, CohereRepository>()
+    .SetHandlerLifetime(TimeSpan.FromMinutes(builder.Configuration
+        .GetSection("HttpClientOptions")?
+        .Get<HttpClientOptions>()?.TempoDeVidaEmMinutos ?? 15))
+    .AddPolicyHandler((serviceProvider, _) => serviceProvider.GetRequiredService<RetryPolicyProvider>().GetPolicy())
+    .AddPolicyHandler((serviceProvider, _) => serviceProvider.GetRequiredService<CircuitBreakerPolicyProvider>().GetPolicy());
+
 
 var app = builder.Build();
 

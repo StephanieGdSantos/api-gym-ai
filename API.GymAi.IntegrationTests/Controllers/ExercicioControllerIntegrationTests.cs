@@ -5,23 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Http.Json;
-using API.GymAi;
+using APIGymAi;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Xunit;
-using API.GymAi.Models;
+using APIGymAi.Models;
 using Microsoft.AspNetCore.Mvc.Testing;
-using API.GymAi.Options;
+using APIGymAi.Options;
 using Microsoft.Extensions.Options;
 using Moq;
 using Microsoft.Extensions.DependencyInjection;
 using Moq.Protected;
-using API.GymAi.Services.Interface;
-using API.GymAi.Services;
-using API.GymAi.Repositories.Interface;
-using API.GymAi.Repositories;
-using API.GymAi.Adapters.Interfaces;
+using APIGymAi.Services.Interface;
+using APIGymAi.Services;
+using APIGymAi.Repositories.Interface;
+using APIGymAi.Repositories;
+using APIGymAi.Adapters.Interface;
+using APIGymAi.Policies;
 
-namespace API.GymAi.IntegrationTests.Services;
+namespace APIGymAi.IntegrationTests.Services;
 
 public class ExercicioControllerIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
 {
@@ -90,8 +91,9 @@ public class ExercicioControllerIntegrationTests : IClassFixture<WebApplicationF
     }
 
     [Fact]
-    public async Task Post_DeveExecutarRetryQuandoServicoExternoFalha()
+    public async Task Post_DeveExecutarRetryPolicy_QuandoServicoExternoFalha()
     {
+        // Arrange
         var handlerMock = new Mock<HttpMessageHandler>();
         handlerMock
             .Protected()
@@ -120,12 +122,19 @@ public class ExercicioControllerIntegrationTests : IClassFixture<WebApplicationF
                     .ConfigurePrimaryHttpMessageHandler(() => handlerMock.Object);
 
                 services.AddScoped<IChatService, ChatService>();
+
+                services.Configure<PolicyOptions>(opts =>
+                {
+                    opts.QuantidadeMaximaDeRetentativas = 3;
+                    opts.IntervaloEmSegundosParaAguardarAntesDeTentarNovamente = 0;
+                    opts.NumeroMaximoDeExcecoesAntesDeCair = 5;
+                    opts.IntervaloDeQuedaEmSegundos = 10;
+                });
             });
         });
 
         var client = factory.CreateClient();
 
-        // Act
         var pessoaValida = new Pessoa
         {
             Idade = 25,
@@ -141,12 +150,14 @@ public class ExercicioControllerIntegrationTests : IClassFixture<WebApplicationF
                 Nivel = InfoPreferencias.EnumNivelCondicionamento.Iniciante
             }
         };
+
+        // Act
         var response = await client.PostAsJsonAsync("/Exercicio", pessoaValida);
 
         // Assert
         handlerMock.Protected().Verify(
             "SendAsync",
-            Times.AtLeast(2),
+            Times.Exactly(1 + 3),
             ItExpr.IsAny<HttpRequestMessage>(),
             ItExpr.IsAny<CancellationToken>());
     }
@@ -154,6 +165,7 @@ public class ExercicioControllerIntegrationTests : IClassFixture<WebApplicationF
     [Fact]
     public async Task Post_DeveAbrirCircuitBreaker_AposFalhasConsecutivas()
     {
+        // Arrange
         var handlerMock = new Mock<HttpMessageHandler>();
         handlerMock
             .Protected()
@@ -166,6 +178,8 @@ public class ExercicioControllerIntegrationTests : IClassFixture<WebApplicationF
                 StatusCode = HttpStatusCode.InternalServerError
             });
 
+        int circuitBreakerOpenCount = 0;
+
         var factory = _factory.WithWebHostBuilder(builder =>
         {
             builder.ConfigureServices(services =>
@@ -176,7 +190,27 @@ public class ExercicioControllerIntegrationTests : IClassFixture<WebApplicationF
 
                 services.AddHttpClient<IChatRepository, CohereRepository>()
                     .ConfigurePrimaryHttpMessageHandler(() => handlerMock.Object);
+
                 services.AddScoped<IChatService, ChatService>();
+
+                services.Configure<PolicyOptions>(opts =>
+                {
+                    opts.QuantidadeMaximaDeRetentativas = 0;
+                    opts.IntervaloEmSegundosParaAguardarAntesDeTentarNovamente = 0;
+                    opts.NumeroMaximoDeExcecoesAntesDeCair = 2;
+                    opts.IntervaloDeQuedaEmSegundos = 2;
+                });
+
+                var providerDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(IHttpPolicyProvider));
+                if (providerDescriptor != null)
+                    services.Remove(providerDescriptor);
+
+                services.AddSingleton<IHttpPolicyProvider>(sp =>
+                    new CircuitBreakerPolicyProvider(
+                        sp.GetRequiredService<IOptions<PolicyOptions>>(),
+                        onBreak: (result, delay) => { circuitBreakerOpenCount++; }
+                    )
+                );
             });
         });
 
@@ -197,15 +231,12 @@ public class ExercicioControllerIntegrationTests : IClassFixture<WebApplicationF
             }
         };
 
-        for (int i = 0; i < 5; i++)
-        {
-            var response = await client.PostAsJsonAsync("/Exercicio", pessoaValida);
-        }
+        await client.PostAsJsonAsync("/Exercicio", pessoaValida);
+        await client.PostAsJsonAsync("/Exercicio", pessoaValida);
+        var response = await client.PostAsJsonAsync("/Exercicio", pessoaValida);
 
-        handlerMock.Protected().Verify(
-            "SendAsync",
-            Times.Exactly(3),
-            ItExpr.IsAny<HttpRequestMessage>(),
-            ItExpr.IsAny<CancellationToken>());
+        // Assert
+        Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+        Assert.True(circuitBreakerOpenCount > 0);
     }
 }

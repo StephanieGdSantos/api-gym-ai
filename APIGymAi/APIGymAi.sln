@@ -5,9 +5,9 @@ VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIGymAi", "APIGymAi.csproj", "{C2FC56F5-AD5C-41B1-89B4-3EEB064A5429}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIGymAi.UnitTests", "..\API.GymAi.UnitTests\APIGymAi.UnitTests.csproj", "{3C69A494-293E-4529-8039-62E7EDBE3A9A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIGymAi.UnitTests", "..\APIGymAi.UnitTests\APIGymAi.UnitTests.csproj", "{3C69A494-293E-4529-8039-62E7EDBE3A9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIGymAi.IntegrationTests", "..\API.GymAi.IntegrationTests\APIGymAi.IntegrationTests.csproj", "{99A3175F-7673-4B90-9D9C-A54D3B9F7BCA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIGymAi.IntegrationTests", "..\APIGymAi.IntegrationTests\APIGymAi.IntegrationTests.csproj", "{99A3175F-7673-4B90-9D9C-A54D3B9F7BCA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

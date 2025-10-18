@@ -94,5 +94,5 @@ ScaffoldingReadMe.txt
 # Arquivos relacionados ao GitHub Copilot
 *.copilot.*
 
-API.GymAi/appsettings.Development.json
-API.GymAi/launchSettings.json
+APIGymAi/appsettings.Development.json
+APIGymAi/launchSettings.json

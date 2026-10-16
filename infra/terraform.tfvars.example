@@ -1,0 +1,5 @@
+aws_region      = "us-east-1"
+project_name    = "gym-ai-api"
+environment     = "prod"
+cohere_api_key  = "replace-me"
+cohere_base_url = "https://api.cohere.com/v2/chat"

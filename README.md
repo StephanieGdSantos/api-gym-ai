@@ -156,6 +156,27 @@ dotnet run
 https://localhost:5001/swagger.html
 ```
 
+## Deploy na AWS com Lambda e API Gateway
+
+A API pode ser executada como uma Lambda .NET 8 atrás de um API Gateway HTTP API. O Terraform em `infra/` cria a função, a role de execução, a integração proxy e a URL pública.
+
+### Deploy local
+
+1. Instale o .NET 8, Terraform e configure credenciais AWS com permissão para criar Lambda, API Gateway, IAM, CloudWatch Logs e ler/escrever o bucket S3 de estado.
+2. Publique a aplicação:
+```bash
+dotnet publish APIGymAi/APIGymAi.csproj -c Release -o artifacts/publish --self-contained false
+```
+3. Inicialize e aplique o Terraform:
+```bash
+export TF_STATE_BUCKET=nome-unico-do-seu-bucket
+terraform -chdir=infra init -backend-config="bucket=$TF_STATE_BUCKET" -backend-config="key=gym-ai-api/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="use_lockfile=true"
+terraform -chdir=infra apply -var="cohere_api_key=$COHERE_API_KEY"
+```
+4. Consulte a URL retornada por `terraform -chdir=infra output -raw api_url` e use o endpoint `POST /Exercicio`.
+
+O workflow `.github/workflows/main.yml` faz esse mesmo processo em pushes para `main`. Antes do primeiro workflow, crie um bucket S3 privado com versionamento e configure os segredos `COHERE_API_KEY` e `TF_STATE_BUCKET`. Confirme também que a role `GitHubAction-AssumeRole` permite executar Terraform, `iam:PassRole` para a role da Lambda e acesso ao bucket de estado. O lock nativo do backend S3 é habilitado por `use_lockfile=true`.
+
 ## 🧪 Testes
 
 Execute os testes usando:

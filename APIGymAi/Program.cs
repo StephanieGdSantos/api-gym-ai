@@ -9,6 +9,7 @@ using APIGymAi.Repositories.Interface;
 using APIGymAi.RespostaSwaggerExample;
 using APIGymAi.Services;
 using APIGymAi.Services.Interface;
+using Amazon.Lambda.AspNetCoreServer.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Polly;
@@ -17,6 +18,8 @@ using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 
 builder.Services.AddControllers();
 builder.Services.AddOptions();
@@ -31,7 +34,7 @@ builder.Services.AddSwaggerGen(options =>
      {
          Title = "GymAi API",
          Version = "v1",
-         Description = "API para geração de treinos inteligentes"
+         Description = "API para geraï¿½ï¿½o de treinos inteligentes"
      });
 
     options.ExampleFilters();
@@ -60,7 +63,7 @@ builder.Services.AddScoped<IPromptBuilder, PromptBuilder>();
 builder.Services.AddScoped<IRetornoChatAdapter, RetornoChatAdapter>();
 builder.Services.AddScoped<RetryPolicyProvider>();
 
-builder.Services.AddSingleton<CircuitBreakerPolicyProvider>(sp =>
+builder.Services.AddSingleton(sp =>
     new CircuitBreakerPolicyProvider(
         sp.GetRequiredService<IOptions<PolicyOptions>>(),
         onBreak,
@@ -118,8 +121,6 @@ if (app.Environment.IsDevelopment())
         options.RoutePrefix = string.Empty;
     });
 }
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

@@ -87,6 +87,16 @@ public class InfoPreferencias
         /// Foco no abdômen.
         /// </summary>
         Abdomen,
+
+        /// <summary>
+        /// Foco nos glúteos
+        /// </summary>
+        Gluteos,
+
+        /// <summary>
+        /// Corpo todo
+        /// </summary>
+        Tudo
     }
 
     /// <summary>

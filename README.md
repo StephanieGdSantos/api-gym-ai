@@ -170,7 +170,7 @@ dotnet publish APIGymAi/APIGymAi.csproj -c Release -o artifacts/publish --self-c
 3. Inicialize e aplique o Terraform:
 ```bash
 export TF_STATE_BUCKET=nome-unico-do-seu-bucket
-terraform -chdir=infra init -backend-config="bucket=$TF_STATE_BUCKET" -backend-config="key=gym-ai-api/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="use_lockfile=true"
+terraform -chdir=infra init -backend-config="bucket=$TF_STATE_BUCKET" -backend-config="key=gym-ai-api/terraform.tfstate" -backend-config="region=sa-east-1" -backend-config="use_lockfile=true"
 terraform -chdir=infra apply -var="cohere_api_key=$COHERE_API_KEY"
 ```
 4. Consulte a URL retornada por `terraform -chdir=infra output -raw api_url` e use o endpoint `POST /Exercicio`.
